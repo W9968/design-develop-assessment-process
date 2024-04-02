@@ -9,13 +9,12 @@ const inputVariant = cva('px-2 disabled:bg-gray-100 disabled:pointer-events-none
   variants: {
     variant: {
       default: 'w-full border-primary-border text-sm focus:border-gray-500 focus:ring-gray-500',
-      error: 'w-full border-accent-error text-sm focus:border-gray-500 focus:ring-gray-500',
       success: 'w-full border-accent-success text-sm focus:border-gray-500 focus:ring-gray-500',
     },
     size: {
-      default: 'h-[40px]',
-      small: 'h-[32px]',
-      large: 'h-[48px]',
+      default: 'h-10',
+      small: 'h-8',
+      large: 'h-12',
     },
   },
   defaultVariants: {},
@@ -35,7 +34,7 @@ export const Input: FC<ComponentProps> = ({ label, type = 'text', hint, error, v
         {required && <span className='text-accent-error ml-1 text-sm'>*</span>}
       </label>
     )}
-    <input id={label} type={type} className={mr(inputVariant({ variant, size }))} autoComplete={'no'} {...rest} />
+    <input id={label} type={type} className={mr(inputVariant({ variant, size }), error && 'border-accent-error focus:border-red-500 focus:ring-red-500')} autoComplete={'no'} {...rest} />
     {!error && hint && <p className='text-xs font-[500] text-content-disabled first-letter:uppercase'>{hint}</p>}
     {error && <p className='text-xs font-[500] text-accent-error first-letter:uppercase'>{error}</p>}
   </div>
