@@ -19,7 +19,7 @@ const sidebarItems: { title: string; path: string; icon: ReactElement; scroll: b
   },
   { title: 'consultants', path: '/dashboard/consultants', scroll: false, icon: <MdOutlinePeopleAlt size={24} /> },
   { title: 'startups', path: '/dashboard/startups', scroll: false, icon: <MdOutlineLink size={24} /> },
-  { title: 'evaluations', path: '/dashboard/evaluation', scroll: false, icon: <MdOutlineAssignment size={24} /> },
+  { title: 'evaluations', path: '/dashboard/evaluations', scroll: false, icon: <MdOutlineAssignment size={24} /> },
 ]
 
 export const DashboardSidebar: FC = () => {
