@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <div className={mr('flex flex-col w-full min-h-screen')}>
-      <div className='w-full h-[72px] max-h-[72px] bg-primary-black'>
+      <div className='w-full h-[62px] max-h-[62px] bg-primary-black'>
         <DashboardHeader />
       </div>
       <div className='flex-1 grid grid-cols-8'>
