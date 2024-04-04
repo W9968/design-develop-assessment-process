@@ -28,7 +28,7 @@ interface ComponentProps extends VariantProps<typeof toastVariant> {
   close?: () => void
 }
 
-export const Toast: FC<ComponentProps & Record<string, any>> = ({ title, message, variant = 'default', className, close, ...rest }) => {
+export const Toast: FC<ComponentProps & Record<string, any>> = ({ title, message, variant = 'default', className, close }) => {
   const decideIcon = () => {
     switch (variant) {
       case 'error':
