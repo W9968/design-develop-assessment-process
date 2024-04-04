@@ -2,7 +2,10 @@ import '@/styles/main.css'
 
 import { ReactNode } from 'react'
 import type { Metadata } from 'next'
+
 import Image from 'next/image'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 import { BoxesCore } from '@/ui/storybook/boxes-core'
 import { mr } from '@/utils/class-authority-merge'
@@ -14,6 +17,10 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  if (cookies().get('token')) {
+    redirect('/dashboard')
+  }
+
   return (
     <div className={mr('bg-primary-background w-full min-h-screen grid grid-cols-8')}>
       <div className='flex flex-col flex-1 p-6 col-span-4 gap-6'>

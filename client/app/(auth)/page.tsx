@@ -9,11 +9,14 @@ import { Input } from '@/ui/input'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
-import { setCookie } from 'cookies-next'
+import { getCookie, setCookie } from 'cookies-next'
 import { formLoginSchema } from '@/lib/validation/form-auth-validation'
 import { authenticate } from '@/lib/actions/auth-actions'
+import { useRouter } from 'next/navigation'
 
 export default function Page(): JSX.Element {
+  const { push } = useRouter()
+
   const {
     formState: { errors },
     handleSubmit,
@@ -27,6 +30,9 @@ export default function Page(): JSX.Element {
     authenticate(data).then((res) => {
       if (res.fulfillment) {
         setCookie('token', res.token.token, { path: '/', maxAge: res.token.expiresIn, domain: 'localhost', expires: new Date(res.token.expiresIn) })
+        if (getCookie('token')) {
+          push('/dashboard')
+        }
       } else {
         alert(res.error.status)
       }
