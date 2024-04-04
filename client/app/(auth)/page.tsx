@@ -1,21 +1,24 @@
 'use client'
 
-import type { JSX } from 'react'
 import Link from 'next/link'
+import type { JSX } from 'react'
+import { useState } from 'react'
 
 import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
+import { Toast } from '@/ui/toast'
 
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
+import { useRouter } from 'next/navigation'
 import { getCookie, setCookie } from 'cookies-next'
 import { formLoginSchema } from '@/lib/validation/form-auth-validation'
 import { authenticate } from '@/lib/actions/auth-actions'
-import { useRouter } from 'next/navigation'
 
 export default function Page(): JSX.Element {
   const { push } = useRouter()
+  const [error, setError] = useState<ErrorAuthType | undefined>()
 
   const {
     formState: { errors },
@@ -34,13 +37,14 @@ export default function Page(): JSX.Element {
           push('/dashboard')
         }
       } else {
-        alert(res.error.status)
+        setError(res.error)
       }
     })
   }
 
   return (
     <div className='w-full h-full flex items-center justify-center'>
+      {error && <Toast title={error?.title} message={error?.description} variant='default' close={() => setError(undefined)} />}
       <div className='w-full max-w-sm flex flex-col gap-8'>
         <div className='grid gap-1'>
           <h1 className='w-full text-center text-3xl text-content-display font-[600] capitalize'>sign in</h1>
