@@ -1,11 +1,12 @@
 'use client'
 
+import Link from 'next/link'
 import type { FC } from 'react'
 import { useState } from 'react'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
-
+import { useRouter } from 'next/navigation'
 import { MdLogout, MdOutlineChevronRight } from 'react-icons/md'
+import { logout } from '@/lib/actions/auth-actions'
 
 interface ComponentProps {
   image: string
@@ -14,6 +15,7 @@ interface ComponentProps {
 }
 
 export const DashboardHeaderProfile: FC<ComponentProps> = ({ image, name, email }) => {
+  const { push } = useRouter()
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   return (
@@ -43,7 +45,7 @@ export const DashboardHeaderProfile: FC<ComponentProps> = ({ image, name, email 
               <p className='flex text-sm capitalize'>Settings</p>
             </Link>
             <div className='h-px bg-gray-500' />
-            <button className='px-3 h-12 text-gray-300 hover:text-primary-white bg-primary-black hover:bg-gray-500 flex items-center justify-between'>
+            <button onClick={() => logout().then((_) => push('/'))} className='px-3 h-12 text-gray-300 hover:text-primary-white bg-primary-black hover:bg-gray-500 flex items-center justify-between'>
               <p className='flex text-sm capitalize'>Logout</p>
               <MdLogout size={18} />
             </button>

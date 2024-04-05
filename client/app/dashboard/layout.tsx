@@ -4,11 +4,11 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-
+// import { redirect } from 'next/navigation'
 import { mr } from '@/utils/class-authority-merge'
 import { DashboardHeader } from '@/components/dashboard-header'
 import { DashboardSidebar } from '@/components/dahsboard-sidebar'
+import { me } from '@/lib/actions/auth-actions'
 
 export const metadata: Metadata = {
   title: 'EY Dashboard',
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  if (!cookies().get('token')) {
-    redirect('/')
+  if (cookies().get('toke')?.value !== null) {
+    me().then((res) => console.log(res))
   }
 
   return (
