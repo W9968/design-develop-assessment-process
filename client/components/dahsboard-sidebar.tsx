@@ -15,10 +15,21 @@ const sidebarItems: { title: string; path: string; icon: ReactElement; scroll: b
     subMenu: [
       { title: 'overview', path: '/dashboard/programs' },
       { title: 'cohorts', path: '/dashboard/programs/cohorts' },
+      { title: 'assessments', path: '/dashboard/programs/assessments' },
+    ],
+  },
+  { title: 'startups', path: '/dashboard/startups', scroll: false, icon: <MdOutlineLink size={24} /> },
+  {
+    title: 'axes',
+    path: '/dashboard/axes',
+    scroll: true,
+    icon: <MdOutlineFolderCopy size={24} />,
+    subMenu: [
+      { title: 'overview', path: '/dashboard/axes' },
+      { title: 'categories', path: '/dashboard/axes/categories' },
     ],
   },
   { title: 'consultants', path: '/dashboard/consultants', scroll: false, icon: <MdOutlinePeopleAlt size={24} /> },
-  { title: 'startups', path: '/dashboard/startups', scroll: false, icon: <MdOutlineLink size={24} /> },
   { title: 'evaluations', path: '/dashboard/evaluations', scroll: false, icon: <MdOutlineAssignment size={24} /> },
 ]
 
