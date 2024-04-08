@@ -15,7 +15,7 @@ import java.util.function.Function;
 
 @Service
 public class JsonWebTokenizer {
-    private final Long EXPIRATION_TIME = 3_600_000L;
+    private final Long EXPIRATION_TIME = 360_000L;
     private final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String extractUsername(String token) {

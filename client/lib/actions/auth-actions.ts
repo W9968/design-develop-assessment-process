@@ -19,6 +19,7 @@ export async function authenticate(data: AuthenticatedUser): Promise<{
 }
 
 export async function logout(): Promise<void> {
+  cookies().delete('user')
   cookies().delete('token')
 }
 
@@ -27,6 +28,7 @@ export async function me(): Promise<{
   user: AuthUserProfileType
   error: ErrorAuthType
 }> {
+  'use server'
   return await useAxios
     .get('/auth/me', {
       headers: {

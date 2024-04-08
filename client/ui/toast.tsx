@@ -7,7 +7,7 @@ import { cva, VariantProps } from 'class-variance-authority'
 import { motion } from 'framer-motion'
 import { MdCheckCircle, MdClose, MdError, MdInfo, MdWarning } from 'react-icons/md'
 
-const toastVariant = cva('z- w-full max-w-[350px] top-4 left-4 absolute py-2 px-3 rounded', {
+const toastVariant = cva('z-20 w-full max-w-[350px] top-4 right-4 absolute py-2 px-3 rounded', {
   variants: {
     variant: {
       default: 'border-[2px] bg-primary-white',

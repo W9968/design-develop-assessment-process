@@ -54,7 +54,7 @@ export default function Page(): JSX.Element {
           <Controller
             name={'email'}
             control={control}
-            render={({ field }) => <Input {...field} type='text' label={'work email'} autoComplete={'off'} error={errors?.email && errors.email.message} />}
+            render={({ field }) => <Input {...field} type='email' label={'work email'} autoComplete={'off'} error={errors?.email && errors.email.message} />}
           />
 
           <div className='w-full flex flex-col gap-1'>
