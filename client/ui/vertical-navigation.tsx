@@ -22,7 +22,7 @@ export const VerticalNavigation: FC<ComponentProps> = ({ title, active = false, 
 
   return haveSubmenu ? (
     <div>
-      <button className={mr('flex-1 w-full h-[52px] flex items-center gap-3', active ? 'text-primary-white bg-gray-500' : 'text-gray-300 bg-primary-black')} onClick={() => setIsDropDown(!isDropped)}>
+      <button className={mr('flex-1 w-full h-14 flex items-center gap-3', active ? 'text-primary-white bg-gray-500' : 'text-gray-300 bg-primary-black')} onClick={() => setIsDropDown(!isDropped)}>
         <div className={mr('w-1 h-full', active ? 'bg-primary-yellow' : 'bg-primary-black')} />
         <div className={'flex-1 flex items-center justify-between gap-3 px-3'}>
           {icon && icon}
@@ -43,7 +43,7 @@ export const VerticalNavigation: FC<ComponentProps> = ({ title, active = false, 
       )}
     </div>
   ) : (
-    <button className={mr('flex-1 w-full h-[52px] flex items-center gap-3', active ? 'text-primary-white bg-gray-500' : 'text-gray-300 bg-primary-black')} {...rest}>
+    <button className={mr('flex-1 w-full h-14 flex items-center gap-3', active ? 'text-primary-white bg-gray-500' : 'text-gray-300 bg-primary-black')} {...rest}>
       <div className={mr('w-1 h-full', active ? 'bg-primary-yellow' : 'bg-primary-black')} />
       <div className={'flex-1 flex items-center justify-between gap-3 px-3'}>
         {icon && icon}
