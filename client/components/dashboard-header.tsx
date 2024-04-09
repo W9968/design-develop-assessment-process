@@ -14,7 +14,7 @@ export const DashboardHeader: FC = () => {
       </div>
       <div className='h-full flex items-center gap-6'>
         <DashboardHeaderIcons />
-        <DashboardHeaderProfile image={'https://i.pravatar.cc/300'} name={'foulen fouleni'} email={'walesebii@tn.ey.com'} />
+        <DashboardHeaderProfile />
       </div>
     </nav>
   )
