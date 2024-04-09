@@ -1,5 +1,6 @@
 package studio.farsighted.pfe.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +32,7 @@ public class UserEntity implements UserDetails {
     @Column(name = "user-email", unique = true, nullable = false)
     private String email;
 
+    @JsonIgnore
     @Column(name = "user-password", nullable = false)
     private String password;
 
