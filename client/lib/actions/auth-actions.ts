@@ -23,22 +23,6 @@ export async function logout(): Promise<void> {
   cookies().delete('token')
 }
 
-export async function me(): Promise<{
-  fulfillment: boolean
-  user: AuthUserProfileType
-  error: ErrorAuthType
-}> {
-  'use server'
-  return await useAxios
-    .get('/auth/me', {
-      headers: {
-        Authorization: `Bearer ${cookies().get('token')?.value}`,
-      },
-    })
-    .then((res) => ({ fulfillment: true, user: res.data, error: emptyError }))
-    .catch((err) => ({ fulfillment: false, user: emptyUser, error: err.response.data }))
-}
-
 /**
  * empty state
  */
@@ -51,21 +35,4 @@ const emptyError = {
   detail: '',
   instance: '',
   description: '',
-}
-const emptyUser = {
-  id: '',
-  fullName: '',
-  username: '',
-  role: '',
-  email: '',
-  isAccountNonLocked: false,
-  isAccountNonExpired: false,
-  isCredentialsNonExpired: false,
-  isEnabled: false,
-  createdAt: '',
-  enabled: false,
-  authorities: [],
-  accountNonLocked: false,
-  accountNonExpired: false,
-  credentialsNonExpired: false,
 }
