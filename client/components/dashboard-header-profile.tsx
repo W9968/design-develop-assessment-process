@@ -47,10 +47,10 @@ export const DashboardHeaderProfile: FC<ComponentProps> = () => {
           transition={{ type: 'just', duration: 0.3 }}
           className='absolute top-14 right-0 w-full bg-primary-black overflow-hidden rounded'>
           <div className='flex flex-col'>
-            <Link passHref href='' className='px-3 h-12 text-gray-300 hover:text-primary-white bg-primary-black hover:bg-gray-500 flex items-center justify-between'>
+            <Link passHref href={'/dashboard/profile'} className='px-3 h-12 text-gray-300 hover:text-primary-white bg-primary-black hover:bg-gray-500 flex items-center justify-between'>
               <p className='flex text-sm capitalize'>Profile</p>
             </Link>
-            <Link passHref href='' className='px-3 h-12 text-gray-300 hover:text-primary-white bg-primary-black hover:bg-gray-500 flex items-center justify-between'>
+            <Link passHref href={'/dashboard/settings'} className='px-3 h-12 text-gray-300 hover:text-primary-white bg-primary-black hover:bg-gray-500 flex items-center justify-between'>
               <p className='flex text-sm capitalize'>Settings</p>
             </Link>
             <div className='h-px bg-gray-500' />
