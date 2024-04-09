@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - develop
-    paths:
-      - '**'
-    paths-ignore:
-      - '.github/workflows/create_pr_and_merge.yml'
 
 jobs:
   create_pr_and_merge:
