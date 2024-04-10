@@ -1,4 +1,3 @@
 export const EY_INTERSTATE_FONT = {
-  fontSize: {},
-  lineHeight: {},
+  sans: ['Public Sans', 'sans-serif'],
 }
