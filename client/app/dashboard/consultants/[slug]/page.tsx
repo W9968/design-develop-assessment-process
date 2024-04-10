@@ -1,5 +1,5 @@
 import type { JSX } from 'react'
-import { Breadcrumb } from '@/ui/breakcrumb'
+import { Breadcrumb } from '@/ui/breadcrumb'
 
 export default function Page(): JSX.Element {
   return (
