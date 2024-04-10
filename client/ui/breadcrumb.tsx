@@ -1,14 +1,13 @@
 'use client'
 
 import type { FC } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { LuChevronRight } from 'react-icons/lu'
 
 interface ComponentProps {}
 
 export const Breadcrumb: FC<ComponentProps> = ({}) => {
-  const { push } = useRouter()
   const pathname: string = usePathname()
 
   return (
