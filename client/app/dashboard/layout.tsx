@@ -36,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
             <DashboardHeaderProfile />
           </div>
         </div>
-        <div className='flex-1 bg-primary-background p-6 overflow-x-hidden overflow-y-auto'>{children}</div>
+        <div className='flex-1 bg-primary-background pb-6 overflow-x-hidden overflow-y-auto'>{children}</div>
       </div>
     </div>
   )

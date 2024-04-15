@@ -10,7 +10,7 @@ interface ComponentProps {
 
 export const ContentHeader: FC<ComponentProps> = ({ title, args }) => {
   return (
-    <div className='flex items-center justify-between'>
+    <div className='flex items-center justify-between p-6'>
       <div>
         <p className='text-4xl capitalize font-semibold mb-3'>{title}</p>
         <Breadcrumb />

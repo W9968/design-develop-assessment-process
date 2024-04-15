@@ -2,11 +2,11 @@ import '@/styles/main.css'
 
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
-import { Public_Sans } from 'next/font/google'
+import { Inter } from 'next/font/google'
 
 import { mr } from '@/utils/class-authority-merge'
 
-const ps = Public_Sans({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   icons: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang='en'>
-      <body className={mr(ps.className, 'overscroll-none')}>{children}</body>
+      <body className={mr(inter.className, 'overscroll-none')}>{children}</body>
     </html>
   )
 }
