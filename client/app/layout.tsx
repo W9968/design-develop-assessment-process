@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang='en'>
-      <body className={mr(inter.className, 'overscroll-none')}>{children}</body>
+      <body className={mr(inter.className, 'overscroll-none overflow-hidden')}>{children}</body>
     </html>
   )
 }

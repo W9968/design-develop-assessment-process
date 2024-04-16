@@ -3,6 +3,8 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { LuClipboardEdit, LuEye, LuTrash } from 'react-icons/lu'
 
+import { DELETE } from '@/lib/actions/startup-server-actions'
+
 export const startupColumns: ColumnDef<StartupType>[] = [
   {
     id: 'startupLogo',
@@ -39,7 +41,11 @@ export const startupColumns: ColumnDef<StartupType>[] = [
     header: 'Label Date',
     accessorKey: 'startupLabelDate',
   },
-
+  {
+    id: 'id',
+    header: 'id',
+    accessorKey: 'id',
+  },
   {
     id: 'startupWebsite',
     header: 'Website',
@@ -62,7 +68,7 @@ export const startupColumns: ColumnDef<StartupType>[] = [
     // size: 64,
     cell: ({ row }) => (
       <div className='flex flex-row-reverse justify-end gap-2'>
-        <button className='flex'>
+        <button className='flex' onClick={() => DELETE(row.original.id)}>
           <LuTrash size={20} className='text-accent-error' />
         </button>
         <button className='flex'>

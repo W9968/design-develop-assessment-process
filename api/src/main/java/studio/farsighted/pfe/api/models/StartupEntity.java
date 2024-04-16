@@ -1,12 +1,11 @@
 package studio.farsighted.pfe.api.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Data
 @Entity
@@ -16,7 +15,10 @@ import lombok.NoArgsConstructor;
 public class StartupEntity {
 
     @Id
-    @Column(name = "startup-name", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    @Column(name = "startup-name", nullable = false)
     private String startupName;
 
     @Column(name = "startup-activity-sector", nullable = false)
