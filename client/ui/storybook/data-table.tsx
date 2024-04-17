@@ -128,7 +128,7 @@ export function DataTable<T>({ data, columns, paging }: PropsWithChildren<Compon
             table.getRowModel().rows.map((row) => (
               <tr key={row.id} data-state={row.getIsSelected() && 'selected'} className='h-[64px] border-b border-gray-250 text-start'>
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className='text-start font-normal text-sm capitalize text-content-display px-3'>
+                  <td key={cell.id} className='text-start font-normal text-sm text-content-display px-3'>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}

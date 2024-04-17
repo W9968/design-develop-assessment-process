@@ -1,9 +1,10 @@
 'use client'
 
 import { ColumnDef } from '@tanstack/react-table'
-import { LuClipboardEdit, LuEye, LuTrash } from 'react-icons/lu'
+import { LuClipboardEdit, LuExternalLink, LuEye, LuTrash } from 'react-icons/lu'
 
 import { DELETE } from '@/lib/actions/startup-server-actions'
+import { Chip } from '@/ui/chip'
 
 export const startupColumns: ColumnDef<StartupType>[] = [
   {
@@ -24,9 +25,10 @@ export const startupColumns: ColumnDef<StartupType>[] = [
     id: 'startupName',
     header: 'Startup Name',
     accessorKey: 'startupName',
+    size: 325,
     cell: ({ row }) => (
       <div className='flex flex-col items-start'>
-        <p className='text-content-display line-clamp-1'>{row.original.startupName}</p>
+        <p className='w-full text-content-display line-clamp-1'>{row.original.startupName}</p>
         <p className='text-xs text-content-prompt'>since {row.original.startupCreatedAt}</p>
       </div>
     ),
@@ -42,24 +44,53 @@ export const startupColumns: ColumnDef<StartupType>[] = [
     accessorKey: 'startupLabelDate',
   },
   {
-    id: 'id',
-    header: 'id',
-    accessorKey: 'id',
-  },
-  {
     id: 'startupWebsite',
     header: 'Website',
-    accessorKey: 'startupWebsite',
+    accessorFn: (row) => (row.startupWebsite && row.startupWebsite.includes('http') ? row.startupWebsite : `http://${row.startupWebsite}`),
+    cell: ({ row }) => (
+      <div>
+        {row.original.startupWebsite && row.original.startupWebsite !== 'null' ? (
+          <a className={'flex items-center gap-2 text-content-display uppercase'} href={row.getValue('startupWebsite')} target='_blank' rel='noreferrer'>
+            {row.original.startupWebsite && row.original.startupWebsite.match(/^(?:https?:\/\/)?(?:www\.)?([^\/]+)/)?.[1]}
+            <LuExternalLink size={16} className='text-accent-link' />
+          </a>
+        ) : (
+          <Chip title={'N/A'} variant={'warning'} />
+        )}
+      </div>
+    ),
   },
   {
     id: 'startupEmail',
     header: 'Email',
     accessorKey: 'startupEmail',
+    cell: ({ row }) => (
+      <div>
+        {row.original.startupEmail && row.original.startupEmail !== 'null' ? (
+          <a className={'flex items-center gap-2 text-content-display uppercase'} href={row.getValue('startupWebsite')} target='_blank' rel='noreferrer'>
+            {row.original.startupEmail}
+          </a>
+        ) : (
+          <Chip title={'N/A'} variant={'ghost'} />
+        )}
+      </div>
+    ),
   },
   {
     id: 'startupPhone',
     header: 'Phone',
     accessorKey: 'startupPhone',
+    cell: ({ row }) => (
+      <div>
+        {row.original.startupPhone && row.original.startupPhone !== 'null' ? (
+          <a className={'flex items-center gap-2 text-content-display uppercase'} href={row.getValue('startupWebsite')} target='_blank' rel='noreferrer'>
+            {row.original.startupPhone}
+          </a>
+        ) : (
+          <Chip title={'N/A'} variant={'danger'} />
+        )}
+      </div>
+    ),
   },
   {
     id: 'actions',
