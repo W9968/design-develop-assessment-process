@@ -20,8 +20,8 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function Page({ searchParams }: { searchParams: { page: string; size: string; search: string; query: string; sector: string } }): Promise<JSX.Element> {
-  const startups: StartupResponseType = (await GET(Number(searchParams.page) - 1, Number(searchParams.size), searchParams.query, searchParams.sector)) || {}
+export default async function Page({ searchParams }: { searchParams: { page: string; size: string; sort: string; dir: string; search: string; query: string; sector: string } }): Promise<JSX.Element> {
+  const startups: StartupResponseType = (await GET(Number(searchParams.page) - 1, Number(searchParams.size), searchParams.sort, searchParams.dir, searchParams.query, searchParams.sector)) || {}
   const activitySectors: string[] = (await GET_ACTIVITY_SECTOR()) || []
 
   return (
@@ -41,9 +41,9 @@ export default async function Page({ searchParams }: { searchParams: { page: str
           <div>
             <ServerSelect
               placeholder={
-                <div className='flex items-center gap-1 text-gray-400'>
-                  <LuStore />
-                  <p>department</p>
+                <div className='flex items-center gap-2 capitalize text-gray-400'>
+                  <LuStore size={20} />
+                  <p className='text-sm font-medium'>department</p>
                 </div>
               }
               classname={'min-w-[250px]'}
