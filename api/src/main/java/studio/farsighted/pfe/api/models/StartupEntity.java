@@ -18,7 +18,7 @@ public class StartupEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "startup-name", nullable = false)
+    @Column(name = "startup-name", unique = true, nullable = false)
     private String startupName;
 
     @Column(name = "startup-activity-sector", nullable = false)
