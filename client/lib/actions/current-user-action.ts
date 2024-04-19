@@ -2,6 +2,7 @@
 
 import { cookies } from 'next/headers'
 import { useAxios } from '@/hooks/useAxios'
+import { redirect } from 'next/navigation'
 
 export async function identify(): Promise<AuthUserProfileType> {
   return await useAxios
@@ -12,6 +13,9 @@ export async function identify(): Promise<AuthUserProfileType> {
       if (res.status === 200) {
         cookies().set('user', JSON.stringify(res.data))
         return res.data
+      } else {
+        cookies().delete('token')
+        redirect('/')
       }
     })
 }

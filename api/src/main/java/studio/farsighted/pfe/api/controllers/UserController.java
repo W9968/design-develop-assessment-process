@@ -24,6 +24,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Page<UserEntity>> index(@PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
             return ResponseEntity.ok(userService.get(pageable));
@@ -43,6 +44,7 @@ public class UserController {
     }
 
     @PutMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public UserEntity update(@RequestBody UserEntity user) {
         if (!userService.isExist(user.getId())) {
             throw new PersistDataException("User with id: " + user.getId() + " not found");
@@ -51,6 +53,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<UserEntity> find(@PathVariable UUID id) {
         if (!userService.isExist(id)) {
             throw new PersistDataException("User with id: " + id + " not found");
@@ -59,6 +62,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public void delete(@PathVariable UUID id) {
         userService.delete(id);
     }

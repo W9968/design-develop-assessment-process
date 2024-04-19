@@ -19,8 +19,6 @@ interface ErrorAuthType {
 
 interface AuthUserProfileType extends Omit<LoginType, 'password'> {
   id?: string
-  username: string
-  password: string
   role: string
   accountNonLocked?: boolean
   accountNonExpired?: boolean

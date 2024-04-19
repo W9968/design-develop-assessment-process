@@ -35,7 +35,7 @@ export const DashboardHeaderProfile: FC<ComponentProps> = () => {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={user.profileImage ? user.profileImage : 'https://api.dicebear.com/8.x/bottts-neutral/svg?seed=Sophie'} alt='' className='h-10 w-10 object-cover flex rounded-full' />
             <div className={'flex flex-1 flex-col items-start px-2'}>
-              <p className='text-primary-white text-base capitalize'>{`${user.firstName} ${user?.middleName} ${user.lastName}`}</p>
+              <p className='text-primary-white text-base capitalize'>{`${user.firstName} ${user.middleName ? user.middleName : ''} ${user.lastName}`}</p>
               <p className='text-gray-300 text-sm'>{user.username}</p>
             </div>
             <motion.span initial={{ rotate: 0 }} transition={{ type: 'just' }}>
