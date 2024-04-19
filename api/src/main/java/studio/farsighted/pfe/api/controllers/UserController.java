@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import studio.farsighted.pfe.api.exceptions.PaginationBoundException;
 import studio.farsighted.pfe.api.exceptions.PersistDataException;
@@ -25,18 +26,19 @@ public class UserController {
     @GetMapping
     public ResponseEntity<Page<UserEntity>> index(@PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
-            return ResponseEntity.ok(userService.getAll(pageable));
+            return ResponseEntity.ok(userService.get(pageable));
         } catch (Exception e) {
-            throw new PaginationBoundException("Startups not found");
+            throw new PaginationBoundException("User not found");
         }
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<UserEntity> save(@RequestBody UserEntity user) {
         try {
             return ResponseEntity.ok(userService.save(user));
         } catch (Exception e) {
-            throw new PersistDataException("StartupEntity not saved: " + e.getMessage());
+            throw new PersistDataException("User not saved: " + e.getMessage());
         }
     }
 
