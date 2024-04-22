@@ -21,8 +21,20 @@ export async function GET(page: number = 0, size: number = 10, sort: string = 'c
     })
 }
 
+export async function GET_DEPARTMENT(): Promise<string[]> {
+  return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/user/departments`, {
+    method: 'GET',
+    next: { revalidate: 0 },
+    headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => {
+      throw new Error(err.message)
+    })
+}
+
 export async function PUT(consultant: Consultant): Promise<ConsultantType> {
-  console.log(consultant)
   return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/user`, {
     method: 'PUT',
     next: { revalidate: 0 },
@@ -32,7 +44,6 @@ export async function PUT(consultant: Consultant): Promise<ConsultantType> {
     .then((res) => res.json())
     .then((data) => {
       revalidatePath('/dashboard/consultants')
-      console.log(data)
       return data
     })
     .catch((err) => {

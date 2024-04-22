@@ -54,7 +54,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<UserEntity> find(@PathVariable UUID id) {
+    public ResponseEntity<UserEntity> find(@PathVariable("id") UUID id) {
         if (!userService.isExist(id)) {
             throw new PersistDataException("User with id: " + id + " not found");
         }
@@ -63,8 +63,18 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public void delete(@PathVariable UUID id) {
+    public void delete(@PathVariable("id") UUID id) {
         userService.delete(id);
+    }
+
+    @GetMapping("/departments")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<?> getDistinctDepartment() {
+        try {
+            return ResponseEntity.ok(userService.getDistinctDepartment());
+        } catch (Exception e) {
+            throw new PersistDataException("Departments not found: " + e.getMessage());
+        }
     }
 
 }

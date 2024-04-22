@@ -50,9 +50,31 @@ export const consultantColumns: ColumnDef<ConsultantType>[] = [
     accessorKey: 'badgeNumber',
   },
   {
+    id: 'jobTitle',
+    header: 'Title',
+    accessorKey: 'jobTitle',
+  },
+  {
     id: 'department',
     header: 'department',
     accessorKey: 'department',
+  },
+  {
+    id: 'role',
+    header: 'role',
+    accessorKey: 'role',
+    cell: ({ row }) => (
+      <div>
+        {row.original.role && row.original.role.split(',').length > 1 ? (
+          <div className='flex items-center gap-2'>
+            <p>{row.original.role?.split(',')[0]}</p>
+            <Chip title={`+${row.original.role?.split(',').length - 1}`} size={'small'} />
+          </div>
+        ) : (
+          <p>{row.original.role?.split(',')[0]}</p>
+        )}
+      </div>
+    ),
   },
   {
     id: 'isEnabled',

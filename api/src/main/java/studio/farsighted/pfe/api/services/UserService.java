@@ -9,6 +9,7 @@ import studio.farsighted.pfe.api.interfaces.UserInterface;
 import studio.farsighted.pfe.api.models.UserEntity;
 import studio.farsighted.pfe.api.repositories.UserRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -53,7 +54,10 @@ public class UserService implements UserInterface {
     }
 
     @Override
-    public Boolean isExist(UUID id) {
-        return userRepository.existsById(id);
+    public Boolean isExist(UUID id) {return userRepository.existsById(id);}
+
+    @Override
+    public List<String> getDistinctDepartment() {
+        return userRepository.findDistinctUserDepartment();
     }
 }

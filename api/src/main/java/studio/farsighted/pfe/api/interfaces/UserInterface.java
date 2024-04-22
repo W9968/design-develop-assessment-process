@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import studio.farsighted.pfe.api.models.UserEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface UserInterface {
@@ -16,4 +17,5 @@ public interface UserInterface {
 
     UserEntity findByUsername(String username);
     Boolean isExist(UUID id);
+    List<String> getDistinctDepartment();
 }
