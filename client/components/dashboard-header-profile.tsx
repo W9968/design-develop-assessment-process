@@ -3,10 +3,11 @@
 import { FC, useLayoutEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { usePathname, useRouter } from 'next/navigation'
-import { MdOutlineChevronRight, MdOutlineSettings } from 'react-icons/md'
+import { MdOutlineChevronRight, MdOutlineLogout, MdOutlineSettings } from 'react-icons/md'
 import { identify } from '@/lib/actions/current-user-action'
 import { VerticalNavigation } from '@/ui/vertical-navigation'
 import { mr } from '@/utils/class-authority-merge'
+import { deleteCookie, getCookie } from 'cookies-next'
 
 interface ComponentProps {}
 
@@ -14,15 +15,24 @@ export const DashboardHeaderProfile: FC<ComponentProps> = () => {
   const { push } = useRouter()
   const pathname: string = usePathname()
 
-  const [user, setUser] = useState<AuthUserProfileType>()
+  const [user, setUser] = useState<AuthUserProfileType>(JSON.parse(getCookie('user') as string))
 
   useLayoutEffect(() => {
-    identify().then((res) => setUser(res))
+    getCookie('user') ? setUser(JSON.parse(getCookie('user') as string)) : identify().then((data) => setUser(data))
   }, [])
 
   return (
     <div>
       <VerticalNavigation title='settings' icon={<MdOutlineSettings size={24} />} onClick={() => push('/dashboard/settings')} active={pathname === '/dashboard/settings'} />
+      <VerticalNavigation
+        title='logout'
+        icon={<MdOutlineLogout size={24} />}
+        onClick={() => {
+          deleteCookie('token')
+          deleteCookie('user')
+          push('/')
+        }}
+      />
       <div className='w-full h-[1px] bg-content-display' />
       <div className={mr('px-3 h-[82px]  flex items-center justify-center relative', pathname === '/dashboard/profile' && 'bg-content-display')}>
         {!user ? (

@@ -67,11 +67,11 @@ export const consultantColumns: ColumnDef<ConsultantType>[] = [
       <div>
         {row.original.role && row.original.role.split(',').length > 1 ? (
           <div className='flex items-center gap-2'>
-            <p>{row.original.role?.split(',')[0]}</p>
-            <Chip title={`+${row.original.role?.split(',').length - 1}`} size={'small'} />
+            <p>{row.original.role.split(',')[0]}</p>
+            <Chip title={`+${row.original.role.split(',').length - 1}`} size={'small'} />
           </div>
         ) : (
-          <p>{row.original.role?.split(',')[0]}</p>
+          <p>{row.original.role.split(',')[0]}</p>
         )}
       </div>
     ),

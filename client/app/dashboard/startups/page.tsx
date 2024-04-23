@@ -43,7 +43,7 @@ export default async function Page({ searchParams }: { searchParams: { page: str
               placeholder={
                 <div className='flex items-center gap-2 capitalize text-gray-400'>
                   <LuStore size={20} />
-                  <p className='text-sm font-medium'>department</p>
+                  <p className='text-sm font-medium'>activity sector</p>
                 </div>
               }
               classname={'min-w-[250px]'}

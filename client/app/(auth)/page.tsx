@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation'
 import { getCookie, setCookie } from 'cookies-next'
 import { formLoginSchema } from '@/lib/validation/form-auth-validation'
 import { authenticate } from '@/lib/actions/auth-actions'
+import { identify } from '@/lib/actions/current-user-action'
 
 export default function Page(): JSX.Element {
   const { push } = useRouter()
@@ -32,18 +33,20 @@ export default function Page(): JSX.Element {
 
   const onSubmit = (data: LoginType): void => {
     setLoading(true)
-    authenticate(data).then((res) => {
-      if (res.fulfillment) {
-        setCookie('token', res.token.token, { path: '/', domain: 'localhost', maxAge: res.token.expiresIn / 1000, expires: new Date(res.token.expiresIn / 1000) })
-        if (getCookie('token')) {
+    authenticate(data)
+      .then((res) => {
+        if (res.fulfillment) {
+          setCookie('token', res.token.token, { path: '/', domain: 'localhost', maxAge: res.token.expiresIn / 1000, expires: new Date(res.token.expiresIn / 1000) })
+          if (getCookie('token')) {
+            push('/dashboard')
+          }
+        } else {
+          setError(res.error)
           setLoading(false)
-          push('/dashboard')
         }
-      } else {
-        setError(res.error)
-        setLoading(false)
-      }
-    })
+      })
+      .then(() => setLoading(false))
+      .then(() => identify())
   }
 
   return (

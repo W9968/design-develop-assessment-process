@@ -8,8 +8,17 @@ import { formConsultantSchema } from '@/lib/validation/form-consultant-validatio
 
 type Consultant = yup.InferType<typeof formConsultantSchema>
 
-export async function GET(page: number = 0, size: number = 10, sort: string = 'createdAt', dir: string = 'desc'): Promise<ConsultantResponseType> {
-  return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/user?page=${page}&size=${size}&sort=${sort},${dir}`, {
+export async function GET(
+  query: string = '',
+  title: string = '',
+  role: string = '',
+  dep: string = '',
+  page: number = 0,
+  size: number = 10,
+  sort: string = 'createdAt',
+  dir: string = 'desc'
+): Promise<ConsultantResponseType> {
+  return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/user?page=${page}&size=${size}&sort=${sort},${dir}&query=${query}&title=${title}&role=${role}&dep=${dep}`, {
     method: 'GET',
     next: { revalidate: 0 },
     headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
@@ -23,6 +32,19 @@ export async function GET(page: number = 0, size: number = 10, sort: string = 'c
 
 export async function GET_DEPARTMENT(): Promise<string[]> {
   return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/user/departments`, {
+    method: 'GET',
+    next: { revalidate: 0 },
+    headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
+  })
+    .then((res) => res.json())
+    .then((data) => data)
+    .catch((err) => {
+      throw new Error(err.message)
+    })
+}
+
+export async function GET_JOB_TITLES(): Promise<string[]> {
+  return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/user/job-titles`, {
     method: 'GET',
     next: { revalidate: 0 },
     headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },

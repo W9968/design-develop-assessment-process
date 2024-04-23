@@ -4,7 +4,7 @@ export const formConsultantSchema = yup.object().shape({
   id: yup.string(),
   username: yup.string().email().required('Email is required'),
   password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
-  role: yup.string().required('Role is required'),
+  role: yup.string.required('Role is required'),
   accountNonLocked: yup.boolean(),
   accountNonExpired: yup.boolean(),
   credentialsNonExpired: yup.boolean(),

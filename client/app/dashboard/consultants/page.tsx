@@ -1,5 +1,5 @@
 import { JSX, Suspense } from 'react'
-import { LuPlusCircle, LuSlidersHorizontal, LuStore } from 'react-icons/lu'
+import { LuBriefcase, LuPlusCircle, LuSlidersHorizontal, LuStore } from 'react-icons/lu'
 
 import { Linker } from '@/ui/link'
 import { DataTable } from '@/ui/storybook/data-table'
@@ -7,13 +7,19 @@ import { DataTable } from '@/ui/storybook/data-table'
 import { ContentHeader } from '@/components/content-header'
 
 import { consultantColumns } from '@/constants/data-tables-headers/consultant-datatable-header'
-import { GET, GET_DEPARTMENT } from '@/lib/actions/consultant-server-actions'
+import { GET, GET_DEPARTMENT, GET_JOB_TITLES } from '@/lib/actions/consultant-server-actions'
 import { SearchInput } from '@/components/content-data-table-search'
 import { ServerSelect } from '@/ui/storybook/server-select'
 
-export default async function Page({ searchParams }: { searchParams: { page: string; size: string; sort: string; dir: string } }): Promise<JSX.Element> {
-  const consultant: ConsultantResponseType = (await GET(Number(searchParams.page) - 1, Number(searchParams.size), searchParams.sort, searchParams.dir)) || {}
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: { page: string; size: string; sort: string; dir: string; query: string; title: string; role: string; dep: string }
+}): Promise<JSX.Element> {
+  const consultant: ConsultantResponseType =
+    (await GET(searchParams.query, searchParams.title, searchParams.role, searchParams.dep, Number(searchParams.page) - 1, Number(searchParams.size), searchParams.sort, searchParams.dir)) || {}
   const departments: string[] = (await GET_DEPARTMENT()) || []
+  const jobTitles: string[] = (await GET_JOB_TITLES()) || []
 
   return (
     <div className='h-full min-h-full w-full'>
@@ -31,6 +37,18 @@ export default async function Page({ searchParams }: { searchParams: { page: str
             <ServerSelect
               placeholder={
                 <div className='flex items-center gap-2 capitalize text-gray-400'>
+                  <LuBriefcase size={20} />
+                  <p className='text-sm font-medium'>job titles</p>
+                </div>
+              }
+              classname={'min-w-[200px]'}
+              data={jobTitles.map((title) => ({ label: title, value: title }))}
+              paramQuery={'title'}
+              multi
+            />
+            <ServerSelect
+              placeholder={
+                <div className='flex items-center gap-2 capitalize text-gray-400'>
                   <LuSlidersHorizontal size={20} />
                   <p className='text-sm font-medium'>role</p>
                 </div>
@@ -39,9 +57,10 @@ export default async function Page({ searchParams }: { searchParams: { page: str
               data={[
                 { label: 'admin', value: 'ADMIN' },
                 { label: 'expert', value: 'EXPERT' },
+                { label: 'string', value: 'STRING' },
                 { label: 'consultant', value: 'CONSULTANT' },
               ]}
-              paramQuery={'deps'}
+              paramQuery={'role'}
               multi
             />
             <ServerSelect
@@ -51,6 +70,7 @@ export default async function Page({ searchParams }: { searchParams: { page: str
                   <p className='text-sm font-medium'>department</p>
                 </div>
               }
+              paramQuery={'dep'}
               classname={'min-w-[250px]'}
               data={departments.map((dep) => ({ label: dep, value: dep }))}
             />
