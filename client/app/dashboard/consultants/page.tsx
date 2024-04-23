@@ -6,8 +6,8 @@ import { DataTable } from '@/ui/storybook/data-table'
 
 import { ContentHeader } from '@/components/content-header'
 
-import { consultantColumns } from '@/constants/data-tables-headers/consultant-datatable-header'
-import { GET, GET_DEPARTMENT, GET_JOB_TITLES } from '@/lib/actions/consultant-server-actions'
+import { consultantColumns } from '@/app/dashboard/consultants/_data/consultant-datatable-header'
+import { GET, GET_DEPARTMENT, GET_JOB_TITLES } from '@/actions/consultant-server-actions'
 import { SearchInput } from '@/components/content-data-table-search'
 import { ServerSelect } from '@/ui/storybook/server-select'
 
@@ -25,7 +25,7 @@ export default async function Page({
     <div className='h-full min-h-full w-full'>
       <ContentHeader
         title={'consultants'}
-        args={[<Linker key={'create-link-consultant-element'} title={'add new'} href={`/dashboard/consultants/create`} size={'large'} icon={<LuPlusCircle size={20} />} className={'gap-1 px-3'} />]}
+        args={[<Linker key={'create-link-consultant-element'} title={'add new'} href={`/dashboard/consultants/create`} size={'large'} icon={<LuPlusCircle size={20} />} className={'gap-2 px-3'} />]}
       />
 
       <div className='bg-primary-white flex flex-col border-t-[2px] border-gray-200'>

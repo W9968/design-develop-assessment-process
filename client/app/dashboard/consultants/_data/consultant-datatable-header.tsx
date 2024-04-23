@@ -5,7 +5,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { LuArrowDownWideNarrow, LuArrowUpWideNarrow, LuClipboardEdit, LuEye, LuShield, LuShieldClose } from 'react-icons/lu'
 
 import { Chip } from '@/ui/chip'
-import { PUT } from '@/lib/actions/consultant-server-actions'
+import { PUT } from '@/actions/consultant-server-actions'
 
 export const consultantColumns: ColumnDef<ConsultantType>[] = [
   {
@@ -125,12 +125,16 @@ export const consultantColumns: ColumnDef<ConsultantType>[] = [
           className='flex disabled:opacity-25 disabled:cursor-not-allowed'>
           {row.original.enabled ? <LuShieldClose size={20} className={'text-accent-error'} /> : <LuShield size={20} className={'text-purple-200'} />}
         </button>
-        <button title='Edit user' disabled={row.original.username === 'wale.sebii@ey.com'} className='flex disabled:opacity-25 disabled:cursor-not-allowed'>
-          <LuClipboardEdit size={20} className='text-accent-link' />
-        </button>
-        <button title='View details' className='flex'>
-          <LuEye size={20} className='text-accent-success' />
-        </button>
+        <Link passHref href={`/dashboard/consultants/${row.original.firstName}-${row.original.lastName}?id=${row.original.id}`}>
+          <button title='Edit user' disabled={row.original.username === 'wale.sebii@ey.com'} className='flex disabled:opacity-25 disabled:cursor-not-allowed'>
+            <LuClipboardEdit size={20} className='text-accent-link' />
+          </button>
+        </Link>
+        <Link passHref href={`/dashboard/consultants/detail?q=${row.original.id}`}>
+          <button title='View details' className='flex'>
+            <LuEye size={20} className='text-accent-success' />
+          </button>
+        </Link>
         <div className='flex-1' />
       </div>
     ),

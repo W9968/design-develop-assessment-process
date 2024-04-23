@@ -1,13 +1,15 @@
 'use client'
 
-import { FC, useLayoutEffect, useState } from 'react'
+import { type FC, useLayoutEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { usePathname, useRouter } from 'next/navigation'
-import { MdOutlineChevronRight, MdOutlineLogout, MdOutlineSettings } from 'react-icons/md'
-import { identify } from '@/lib/actions/current-user-action'
-import { VerticalNavigation } from '@/ui/vertical-navigation'
-import { mr } from '@/utils/class-authority-merge'
 import { deleteCookie, getCookie } from 'cookies-next'
+import { usePathname, useRouter } from 'next/navigation'
+
+import { MdOutlineChevronRight, MdOutlineLogout, MdOutlineSettings } from 'react-icons/md'
+
+import { mr } from '@/utils/class-authority-merge'
+import { identify } from '@/actions/current-user-action'
+import { VerticalNavigation } from '@/ui/vertical-navigation'
 
 interface ComponentProps {}
 

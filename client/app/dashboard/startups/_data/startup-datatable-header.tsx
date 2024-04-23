@@ -5,7 +5,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { LuArrowDownWideNarrow, LuArrowUpWideNarrow, LuClipboardEdit, LuExternalLink, LuEye, LuTrash } from 'react-icons/lu'
 
 import { Chip } from '@/ui/chip'
-import { DELETE } from '@/lib/actions/startup-server-actions'
+import { DELETE } from '@/actions/startup-server-actions'
 
 export const startupColumns: ColumnDef<StartupType>[] = [
   {

@@ -13,9 +13,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useRouter } from 'next/navigation'
 import { getCookie, setCookie } from 'cookies-next'
-import { formLoginSchema } from '@/lib/validation/form-auth-validation'
-import { authenticate } from '@/lib/actions/auth-actions'
-import { identify } from '@/lib/actions/current-user-action'
+
+import { formLoginSchema } from '@/validation/form-auth-validation'
+import { authenticate } from '@/actions/auth-actions'
+import { identify } from '@/actions/current-user-action'
 
 export default function Page(): JSX.Element {
   const { push } = useRouter()

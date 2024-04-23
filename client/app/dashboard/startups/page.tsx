@@ -6,11 +6,11 @@ import { Linker } from '@/ui/link'
 import { DataTable } from '@/ui/storybook/data-table'
 
 import { ContentHeader } from '@/components/content-header'
-import { startupColumns } from '@/constants/data-tables-headers/startup-datatable-header'
+import { startupColumns } from '@/app/dashboard/startups/_data/startup-datatable-header'
 
 import { ServerSelect } from '@/ui/storybook/server-select'
 import { SearchInput } from '@/components/content-data-table-search'
-import { GET, GET_ACTIVITY_SECTOR } from '@/lib/actions/startup-server-actions'
+import { GET, GET_ACTIVITY_SECTOR } from '@/actions/startup-server-actions'
 
 export const metadata: Metadata = {
   title: 'EY Dashboard',

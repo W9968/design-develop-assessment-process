@@ -4,7 +4,7 @@ import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
 
 import * as yup from 'yup'
-import { formConsultantSchema } from '@/lib/validation/form-consultant-validation'
+import { formConsultantSchema } from '@/app/dashboard/consultants/_data/form-consultant-validation'
 
 type Consultant = yup.InferType<typeof formConsultantSchema>
 
