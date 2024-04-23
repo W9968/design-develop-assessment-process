@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -48,11 +49,10 @@ public class UserEntity implements UserDetails {
     @Column(name = "user-created-at", updatable = false)
     private Date createdAt = new Date();
 
-    /* Helper Function with the USER-Details */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        String[] roles = role.split(",");
+        String[] roles = Arrays.stream(this.role.split(",")).sorted().toArray(String[]::new);
         for (String r : roles) {
             authorityList.add(new SimpleGrantedAuthority(r.trim()));
         }
@@ -116,5 +116,8 @@ public class UserEntity implements UserDetails {
 
     @Column(name = "user-can-assest")
     private Boolean isEligibleForEvaluation = false;
+
+    @Column(name = "user-cin", unique = true, nullable = false)
+    private String cin;
 
 }

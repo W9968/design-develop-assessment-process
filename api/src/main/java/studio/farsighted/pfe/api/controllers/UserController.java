@@ -23,13 +23,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @GetMapping(value = "", params = {"query", "title", "role", "dep"})
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Page<UserEntity>> index(@PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<UserEntity>> index(@RequestParam("query") String query, @RequestParam("title") String title, @RequestParam("role") String role, @RequestParam("dep") String dep, @PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
-            return ResponseEntity.ok(userService.get(pageable));
+            return ResponseEntity.ok(userService.get(query, title, role, dep, pageable));
         } catch (Exception e) {
-            throw new PaginationBoundException("User not found");
+            throw new PaginationBoundException("Users not found: " + e.getMessage());
         }
     }
 
@@ -74,6 +74,16 @@ public class UserController {
             return ResponseEntity.ok(userService.getDistinctDepartment());
         } catch (Exception e) {
             throw new PersistDataException("Departments not found: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/job-titles")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<?> getDistinctJobTitles() {
+        try {
+            return ResponseEntity.ok(userService.getDistinctJobTitles());
+        } catch (Exception e) {
+            throw new PersistDataException("Job titles not found: " + e.getMessage());
         }
     }
 
