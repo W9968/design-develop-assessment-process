@@ -29,7 +29,7 @@ export default async function Page({ searchParams }: { searchParams: { page: str
       <ContentHeader
         title={'startups'}
         args={[
-          <Linker key={'create-link-consultant'} size={'large'} title={'add new'} className={'gap-1 px-3'} href={`/dashboard/consultants/create`} icon={<LuPlusCircle className='flex' size={18} />} />,
+          <Linker key={'create-link-consultant'} size={'large'} title={'add new'} className={'gap-2 px-3'} href={`/dashboard/startups/create`} icon={<LuPlusCircle className='flex' size={18} />} />,
         ]}
       />
 

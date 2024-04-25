@@ -17,7 +17,7 @@ export const DashboardHeaderProfile: FC<ComponentProps> = () => {
   const { push } = useRouter()
   const pathname: string = usePathname()
 
-  const [user, setUser] = useState<AuthUserProfileType>(JSON.parse(getCookie('user') as string))
+  const [user, setUser] = useState<AuthUserProfileType | null>(JSON.parse(getCookie('user') as string) || null)
 
   useLayoutEffect(() => {
     getCookie('user') ? setUser(JSON.parse(getCookie('user') as string)) : identify().then((data) => setUser(data))
