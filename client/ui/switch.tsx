@@ -27,7 +27,7 @@ interface ComponentProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'si
   width?: number
 }
 
-export const Switch: FC<ComponentProps> = forwardRef<HTMLInputElement, ComponentProps>(({ size = 'small', width, label, hint, error, required = false, hidden = false, ...rest }, ref) => {
+export const Switch: FC<ComponentProps> = forwardRef<HTMLInputElement, ComponentProps>(({ size = 'small', width, label, value, hint, error, required = false, hidden = false, ...rest }, ref) => {
   return (
     <div className='flex flex-col items-start gap-1 self-stretch'>
       <div className='flex items-center gap-6'>

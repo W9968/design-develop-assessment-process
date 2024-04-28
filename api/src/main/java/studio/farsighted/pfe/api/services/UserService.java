@@ -5,12 +5,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import studio.farsighted.pfe.api.interfaces.UserInterface;
 import studio.farsighted.pfe.api.models.UserEntity;
 import studio.farsighted.pfe.api.repositories.UserRepository;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +25,7 @@ public class UserService implements UserInterface {
 
     @Override
     public Page<UserEntity> get(String query, String title, String role, String department, Pageable pageable) {
-        role = Arrays.stream(role.split(",")).sorted().collect(Collectors.joining(",")).replace(",", " % ");;
+        role = Arrays.stream(role.split(",")).sorted().collect(Collectors.joining(",")).replace(",", " % ");
         return userRepository.findUsersByFilterCriteria(query, title, role, department, pageable);
     }
 
@@ -42,7 +43,9 @@ public class UserService implements UserInterface {
 
     @Override
     public UserEntity update(UserEntity user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (!user.getPassword().equals(this.userRepository.findById(user.getId()).get().getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         return userRepository.save(user);
     }
 
@@ -52,7 +55,9 @@ public class UserService implements UserInterface {
     }
 
     @Override
-    public Boolean isExist(UUID id) {return userRepository.existsById(id);}
+    public Boolean isExist(UUID id) {
+        return userRepository.existsById(id);
+    }
 
     @Override
     public List<String> getDistinctDepartment() {

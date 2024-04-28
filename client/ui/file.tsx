@@ -27,14 +27,15 @@ const inputVariant = cva(
   }
 )
 
-interface ComponentProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>, VariantProps<typeof inputVariant> {
+interface ComponentProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange'>, VariantProps<typeof inputVariant> {
   label: string
   hint?: string
   error?: string
+  onChange: (value: string) => void
 }
 
 export const FileUpload: FC<ComponentProps> = forwardRef<HTMLInputElement, ComponentProps>(
-  ({ label, type = 'text', hint, error, variant = 'default', size = 'default', required = false, ...rest }, ref) => {
+  ({ label, type = 'text', hint, error, variant = 'default', size = 'default', required = false, onChange }, ref) => {
     const [selectedFile, setSelectFile] = useState<File | null>(null)
     const [uploadProgress, setUploadProgress] = useState<number>(0)
 
@@ -54,7 +55,6 @@ export const FileUpload: FC<ComponentProps> = forwardRef<HTMLInputElement, Compo
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log('data : ' + data)
             let progress = 1
             const interval = setInterval(() => {
               progress += 7
@@ -64,6 +64,7 @@ export const FileUpload: FC<ComponentProps> = forwardRef<HTMLInputElement, Compo
               }
               setUploadProgress(progress)
             }, 100) // Change the interval as needed
+            onChange(data.url)
             return data
           })
           .catch((err) => {
@@ -115,7 +116,14 @@ export const FileUpload: FC<ComponentProps> = forwardRef<HTMLInputElement, Compo
                 <p className='text-sm font-[500] text-content-disabled first-letter:uppercase'>{formatFileSize(selectedFile.size)}</p>
               </div>
               <div>
-                <TbTrash size={18} className='text-content-prompt hover:text-accent-error cursor-pointer' onClick={() => setSelectFile(null)} />
+                <TbTrash
+                  size={18}
+                  className='text-content-prompt hover:text-accent-error cursor-pointer'
+                  onClick={() => {
+                    setSelectFile(null)
+                    onChange('')
+                  }}
+                />
               </div>
             </div>
             <div className='w-full flex items-center gap-x-3 whitespace-nowrap'>
@@ -138,7 +146,7 @@ export const FileUpload: FC<ComponentProps> = forwardRef<HTMLInputElement, Compo
               <TbFileUpload size={18} className='text-content-prompt' />
               <span className='text-sm font-[500] text-content-disabled first-letter:uppercase'>upload file</span>
             </div>
-            <input ref={ref} id={label} type='file' className={'sr-only peer'} autoComplete='no' onChange={handleFileChange} {...rest} />
+            <input ref={ref} id={label} type='file' className={'sr-only peer'} autoComplete='no' onChange={handleFileChange} />
           </label>
         )}
         {!error && hint && <p className='text-xs font-[500] text-content-disabled first-letter:uppercase'>{hint}</p>}

@@ -67,7 +67,7 @@ export const Button: FC<ComponentProps> = ({ title, icon, variant = 'default', s
       )}
       {...rest}>
       {icon && icon}
-      <p className={mr('text-sm font-[550] tracking-wide capitalize')}>
+      <div className={mr('text-sm font-[550] tracking-wide capitalize')}>
         {loading ? (
           <AnimatePresence>
             {alternateLoading ? (
@@ -83,7 +83,7 @@ export const Button: FC<ComponentProps> = ({ title, icon, variant = 'default', s
         ) : (
           title
         )}
-      </p>
+      </div>
       {loading && (
         <motion.div
           initial={{ width: 0 }}
