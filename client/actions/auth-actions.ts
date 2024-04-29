@@ -2,7 +2,7 @@
 
 import * as yup from 'yup'
 import { useAxios } from '@/hooks/useAxios'
-import { formLoginSchema } from '@/lib/validation/form-auth-validation'
+import { formLoginSchema } from '@/validation/form-auth-validation'
 import { cookies } from 'next/headers'
 
 type AuthenticatedUser = yup.InferType<typeof formLoginSchema>
