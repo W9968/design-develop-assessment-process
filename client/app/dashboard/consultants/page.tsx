@@ -14,10 +14,10 @@ import { ServerSelect } from '@/ui/storybook/server-select'
 export default async function Page({
   searchParams,
 }: {
-  searchParams: { page: string; size: string; sort: string; dir: string; query: string; title: string; role: string; dep: string }
+  searchParams: { page: string; size: string; sort: string; dir: string; query: string; title: string; status: string; dep: string }
 }): Promise<JSX.Element> {
   const consultant: ConsultantResponseType =
-    (await GET(searchParams.query, searchParams.title, searchParams.role, searchParams.dep, Number(searchParams.page) - 1, Number(searchParams.size), searchParams.sort, searchParams.dir)) || {}
+    (await GET(searchParams.query, searchParams.title, searchParams.status, searchParams.dep, Number(searchParams.page) - 1, Number(searchParams.size), searchParams.sort, searchParams.dir)) || {}
   const departments: string[] = (await GET_DEPARTMENT()) || []
   const jobTitles: string[] = (await GET_JOB_TITLES()) || []
 
@@ -37,6 +37,20 @@ export default async function Page({
             <ServerSelect
               placeholder={
                 <div className='flex items-center gap-2 capitalize text-gray-400'>
+                  <LuSlidersHorizontal size={20} />
+                  <p className='text-sm font-medium'>Status</p>
+                </div>
+              }
+              classname={'min-w-[150px]'}
+              data={[
+                { label: 'Active', value: 'true' },
+                { label: 'Disabled', value: 'false' },
+              ]}
+              paramQuery={'status'}
+            />
+            <ServerSelect
+              placeholder={
+                <div className='flex items-center gap-2 capitalize text-gray-400'>
                   <LuBriefcase size={20} />
                   <p className='text-sm font-medium'>job titles</p>
                 </div>
@@ -44,24 +58,6 @@ export default async function Page({
               classname={'min-w-[200px]'}
               data={jobTitles.map((title) => ({ label: title, value: title }))}
               paramQuery={'title'}
-              multi
-            />
-            <ServerSelect
-              placeholder={
-                <div className='flex items-center gap-2 capitalize text-gray-400'>
-                  <LuSlidersHorizontal size={20} />
-                  <p className='text-sm font-medium'>role</p>
-                </div>
-              }
-              classname={'min-w-[200px]'}
-              data={[
-                { label: 'admin', value: 'ADMIN' },
-                { label: 'expert', value: 'EXPERT' },
-                { label: 'string', value: 'STRING' },
-                { label: 'consultant', value: 'CONSULTANT' },
-              ]}
-              paramQuery={'role'}
-              multi
             />
             <ServerSelect
               placeholder={

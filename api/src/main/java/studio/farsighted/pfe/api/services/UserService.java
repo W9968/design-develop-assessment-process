@@ -9,10 +9,8 @@ import studio.farsighted.pfe.api.interfaces.UserInterface;
 import studio.farsighted.pfe.api.models.UserEntity;
 import studio.farsighted.pfe.api.repositories.UserRepository;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserInterface {
@@ -24,9 +22,8 @@ public class UserService implements UserInterface {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public Page<UserEntity> get(String query, String title, String role, String department, Pageable pageable) {
-        role = Arrays.stream(role.split(",")).sorted().collect(Collectors.joining(",")).replace(",", " % ");
-        return userRepository.findUsersByFilterCriteria(query, title, role, department, pageable);
+    public Page<UserEntity> get(String query, String title, Boolean status, String department, Pageable pageable) {
+        return userRepository.findUsersByFilterCriteria(query, title, status, department, pageable);
     }
 
     @Override
@@ -37,7 +34,6 @@ public class UserService implements UserInterface {
     @Override
     public UserEntity save(UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Arrays.stream(user.getRole().split(",")).sorted().collect(Collectors.joining(",")));
         return userRepository.save(user);
     }
 
