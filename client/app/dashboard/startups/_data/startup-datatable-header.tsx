@@ -5,7 +5,7 @@ import type { ColumnDef } from '@tanstack/react-table'
 import { LuArrowDownWideNarrow, LuArrowUpWideNarrow, LuClipboardEdit, LuExternalLink, LuEye, LuTrash } from 'react-icons/lu'
 
 import { Chip } from '@/ui/chip'
-import { DELETE } from '@/lib/actions/startup-server-actions'
+import { DELETE } from '@/actions/startup-server-actions'
 
 export const startupColumns: ColumnDef<StartupType>[] = [
   {
@@ -155,13 +155,15 @@ export const startupColumns: ColumnDef<StartupType>[] = [
     // size: 64,
     cell: ({ row }) => (
       <div className='flex flex-row-reverse justify-end gap-2'>
-        <button className='flex' onClick={() => DELETE(row.original.id)}>
+        <button title='Remove startup from list' className='flex' onClick={() => DELETE(row.original.id)}>
           <LuTrash size={20} className='text-accent-error' />
         </button>
-        <button className='flex'>
-          <LuClipboardEdit size={20} className='text-accent-link' />
-        </button>
-        <button className='flex'>
+        <Link passHref href={`/dashboard/startups/${row.original.startupName.replaceAll(' ', '')}?id=${row.original.id}`}>
+          <button title='Edit startup information' className='flex'>
+            <LuClipboardEdit size={20} className='text-accent-link' />
+          </button>
+        </Link>
+        <button title='More information' className='flex'>
           <LuEye size={20} className='text-accent-success' />
         </button>
         <div className='flex-1' />
