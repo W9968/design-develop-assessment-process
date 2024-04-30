@@ -13,11 +13,14 @@ import { yupResolver } from '@hookform/resolvers/yup'
 
 import { useRouter } from 'next/navigation'
 import { getCookie, setCookie } from 'cookies-next'
-import { formLoginSchema } from '@/lib/validation/form-auth-validation'
-import { authenticate } from '@/lib/actions/auth-actions'
+
+import { formLoginSchema } from '@/validation/form-auth-validation'
+import { authenticate } from '@/actions/auth-actions'
+import { identify } from '@/actions/current-user-action'
 
 export default function Page(): JSX.Element {
   const { push } = useRouter()
+  const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<ErrorAuthType | undefined>()
 
   const {
@@ -26,20 +29,25 @@ export default function Page(): JSX.Element {
     control,
   } = useForm({
     resolver: yupResolver(formLoginSchema),
-    defaultValues: { email: '', password: '' },
+    defaultValues: { username: '', password: '' },
   })
 
   const onSubmit = (data: LoginType): void => {
-    authenticate(data).then((res) => {
-      if (res.fulfillment) {
-        setCookie('token', res.token.token, { path: '/', domain: 'localhost', maxAge: res.token.expiresIn / 1000, expires: new Date(res.token.expiresIn / 1000) })
-        if (getCookie('token')) {
-          push('/dashboard')
+    setLoading(true)
+    authenticate(data)
+      .then((res) => {
+        if (res.fulfillment) {
+          setCookie('token', res.token.token, { path: '/', domain: 'localhost', maxAge: res.token.expiresIn / 1000, expires: new Date(res.token.expiresIn / 1000) })
+          if (getCookie('token')) {
+            push('/dashboard')
+          }
+        } else {
+          setError(res.error)
+          setLoading(false)
         }
-      } else {
-        setError(res.error)
-      }
-    })
+      })
+      .then(() => setLoading(false))
+      .then(() => identify())
   }
 
   return (
@@ -52,9 +60,9 @@ export default function Page(): JSX.Element {
         </div>
         <div className='w-full grid gap-4'>
           <Controller
-            name={'email'}
+            name={'username'}
             control={control}
-            render={({ field }) => <Input {...field} type='email' label={'work email'} autoComplete={'off'} error={errors?.email && errors.email.message} />}
+            render={({ field }) => <Input {...field} type='email' label={'work email'} autoComplete={'off'} error={errors?.username && errors.username.message} />}
           />
 
           <div className='w-full flex flex-col gap-1'>
@@ -69,7 +77,7 @@ export default function Page(): JSX.Element {
           </div>
         </div>
         <div className='w-full'>
-          <Button title={'sign in'} type={'submit'} onClick={handleSubmit(onSubmit)} />
+          <Button title={'sign in'} type={'submit'} onClick={handleSubmit(onSubmit)} loading={loading} />
         </div>
       </div>
     </div>
