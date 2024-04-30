@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/startup")
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:1999", allowCredentials = "true", allowedHeaders = "*")
 public class StartupController {
 
     @Autowired
