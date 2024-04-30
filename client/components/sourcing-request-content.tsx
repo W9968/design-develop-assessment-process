@@ -20,45 +20,6 @@ export const SourcingRequestContent: FC = () => {
     progress: 0,
   })
 
-  // function handleSourcing() {
-  //   setState({ loading: true, error: null, success: null, progress: 0 })
-  //   fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/startup`, {
-  //     method: 'PATCH',
-  //     headers: { Authorization: `Bearer ${getCookie('token')}` },
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       let progress = 0
-  //       const interval = setInterval(() => {
-  //         progress += 3
-  //         if (progress > 100) {
-  //           progress = 100
-  //           clearInterval(interval)
-  //         }
-  //         if (data !== 0) {
-  //           setState({
-  //             loading: false,
-  //             error: null,
-  //             progress,
-  //             success: { success: 'startup list updated', message: `The sourcing job has been executed successfully. ${data} element has been added to the database.` },
-  //           })
-  //         } else {
-  //           setState({
-  //             loading: false,
-  //             error: {
-  //               error: "The sourcing job wasn't executed successfully.",
-  //               message: "The sourcing job wasn't executed successfully. No element has been added to the database.",
-  //             },
-  //             success: null,
-  //             progress,
-  //           })
-  //           clearInterval(interval) // Stop the interval if data is not true
-  //         }
-  //       }, 100) // Change the interval as needed
-  //     })
-  //     .catch((err) => console.log('error data=> ', err))
-  // }
-
   function handleSourcing() {
     setState({ loading: true, error: null, success: null, progress: 0 })
     const startTime = Date.now() // Get the current time when starting the fetch
