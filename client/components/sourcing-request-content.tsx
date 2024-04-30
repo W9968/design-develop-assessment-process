@@ -5,50 +5,85 @@ import { useState } from 'react'
 
 import { LuCheck, LuX } from 'react-icons/lu'
 import { getCookie } from 'cookies-next'
-import { mr } from '@/utils/class-authority-merge'
+import { motion } from 'framer-motion'
 
 import { Switch } from '@/ui/switch'
 import { Button } from '@/ui/button'
+import { mr } from '@/utils/class-authority-merge'
 
 export const SourcingRequestContent: FC = () => {
   const [isToggle, setToggle] = useState<boolean>()
-  const [state, setState] = useState<{ loading: boolean; error: { error: string; message: string } | null; progress: number }>({
+  const [state, setState] = useState<{ loading: boolean; error: { error: string; message: string } | null; success: { success: string; message: string } | null; progress: number }>({
     loading: false,
     error: null,
+    success: null,
     progress: 0,
   })
 
   function handleSourcing() {
-    setState({ loading: true, error: null, progress: 0 })
+    setState({ loading: true, error: null, success: null, progress: 0 })
+    const startTime = Date.now() // Get the current time when starting the fetch
+
     fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/startup`, {
       method: 'PATCH',
       headers: { Authorization: `Bearer ${getCookie('token')}` },
     })
       .then((res) => res.json())
       .then((data) => {
+        const endTime = Date.now() // Get the current time when data is received
+        const elapsedTime = endTime - startTime // Calculate the time elapsed
         let progress = 0
-        const interval = setInterval(() => {
-          progress += 3
-          if (progress > 100) {
-            progress = 100
-            clearInterval(interval)
-          }
-          if (data === true) {
-            setState({ loading: false, error: null, progress })
-          } else {
-            setState({
-              loading: false,
-              error: {
-                error: data.error,
-                message: data.message,
-              },
-              progress,
-            })
-            clearInterval(interval) // Stop the interval if data is not true
-          }
-        }, 100) // Change the interval as needed
+
+        if (data !== 0) {
+          progress = 100
+        } else {
+          progress = Math.ceil(Math.min((elapsedTime / MAX_TIME) * 100, 100)) // Calculate progress based on elapsed time
+        }
+
+        setState({
+          loading: false,
+          error:
+            data !== 0
+              ? null
+              : {
+                  error: "The sourcing job wasn't executed successfully.",
+                  message: "The sourcing job wasn't executed successfully. No element has been added to the database.",
+                },
+          success: data !== 0 ? { success: 'startup list updated', message: `The sourcing job has been executed successfully. ${data} element has been added to the database.` } : null,
+          progress,
+        })
+
+        if (data === 0) {
+          clearInterval(interval) // Stop the interval if data is 0
+        }
       })
-      .catch((err) => console.log('error data=> ', err))
+      .catch((err) => {
+        clearInterval(interval) // Stop the interval if an error occurs
+        setState({
+          loading: false,
+          error: {
+            error: 'Error occurred during sourcing job.',
+            message: 'An error occurred during the sourcing job. Please try again later.',
+          },
+          success: null,
+          progress: 0,
+        })
+        console.log('error data=> ', err)
+      })
+
+    const MAX_TIME = 10000 // Maximum time to wait for data (in milliseconds)
+    const interval = setInterval(() => {
+      setState((prevState) => {
+        if (prevState.progress < 100) {
+          return {
+            ...prevState,
+            progress: Math.min(prevState.progress + 1, 100), // Increment progress by 1 until it reaches 100
+          }
+        }
+        clearInterval(interval) // Stop the interval if progress reaches 100%
+        return prevState
+      })
+    }, 100) // Update interval frequency as needed
   }
 
   return (
@@ -69,13 +104,16 @@ export const SourcingRequestContent: FC = () => {
               <span className='text-sm text-content-display'>{state.progress}%</span>
             </div>
             <div className='flex w-full h-2 bg-gray-200 rounded-full overflow-hidden' role='progressbar'>
-              <div
+              <motion.div
                 className={mr(
                   'flex flex-col justify-center rounded-full overflow-hidden text-xs text-white text-center whitespace-nowrap transition duration-500',
-                  state.error ? 'bg-red-600' : 'bg-blue-600',
-                  state.progress === 100 && 'bg-green-600'
+                  state.progress === 100 && state.success && 'bg-green-600',
+                  state.error ? 'bg-red-600' : 'bg-blue-600'
                 )}
-                style={{ width: `${state.progress}%` }}></div>
+                initial={{ width: '0%' }}
+                animate={{ width: `${state.progress}%` }}
+                transition={{ type: 'just' }}
+              />
             </div>
           </div>
           {/* error alert */}
@@ -88,14 +126,14 @@ export const SourcingRequestContent: FC = () => {
                   </span>
                 </div>
                 <div className='ms-3'>
-                  <h3 className='text-gray-800 font-semibold dark:text-white'>Error!</h3>
+                  <h3 className='text-gray-800 font-semibold dark:text-white capitalize'>Error!</h3>
                   <p className='text-sm text-gray-700 dark:text-neutral-400'>{state.error.error}</p>
                 </div>
               </div>
             </div>
           )}
           {/* success alert */}
-          {!state.error && state.progress === 100 && (
+          {state.success && (
             <div className='w-full bg-green-100/20 border-s-4 border-green-600 p-4 dark:bg-red-800/30' role='alert'>
               <div className='flex items-center'>
                 <div className='flex-shrink-0'>
@@ -104,8 +142,8 @@ export const SourcingRequestContent: FC = () => {
                   </span>
                 </div>
                 <div className='ms-3'>
-                  <h3 className='text-gray-800 font-semibold dark:text-white'>Success!</h3>
-                  <p className='text-sm text-gray-700 dark:text-neutral-400'>The sourcing job has been executed successfully.</p>
+                  <h3 className='text-gray-800 font-semibold dark:text-white capitalize'>{state.success.success}!</h3>
+                  <p className='text-sm text-gray-700 dark:text-neutral-400'>{state.success.message}</p>
                 </div>
               </div>
             </div>

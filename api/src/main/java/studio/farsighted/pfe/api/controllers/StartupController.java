@@ -56,7 +56,7 @@ public class StartupController {
 
     @PatchMapping
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Boolean> merge() {
+    public ResponseEntity<Integer> merge() {
         try {
             return ResponseEntity.ok(startupService.transformToDatabase());
         } catch (Exception e) {
