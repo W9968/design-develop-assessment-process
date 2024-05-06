@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -43,8 +44,11 @@ public class ProgramEntity {
     @Column(name = "program-status")
     private String programStatus;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(referencedColumnName = "id")
     private ProgramProviderEntity provider;
+
+    @OneToMany(mappedBy = "program", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProgramCohortEntity> cohorts;
 
 }
