@@ -15,7 +15,7 @@ public interface ProgramInterface {
 
     ProgramEntity update(ProgramEntity program);
 
-    void delete(String id);
+    void delete(UUID id);
 
     Boolean isExist(UUID id);
 }

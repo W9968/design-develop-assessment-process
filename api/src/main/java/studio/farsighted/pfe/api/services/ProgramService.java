@@ -47,8 +47,8 @@ public class ProgramService implements ProgramInterface {
     }
 
     @Override
-    public void delete(String id) {
-        programRepository.deleteById(UUID.fromString(id));
+    public void delete(UUID id) {
+        programRepository.deleteById(id);
     }
 
     @Override

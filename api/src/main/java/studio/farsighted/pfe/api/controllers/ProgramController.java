@@ -63,8 +63,18 @@ public class ProgramController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public void delete(@PathVariable("id") String id) {
-        programService.delete(id);
+    public ResponseEntity<ProgramEntity> delete(@PathVariable("id") UUID id) {
+        ProgramEntity program = programService.find(id);
+        if (!programService.isExist(id)) {
+            throw new PersistDataException("Program with id: " + id + " not found");
+        }
+
+        try {
+            programService.delete(id);
+            return ResponseEntity.ok(program);
+        } catch (Exception e) {
+            throw new PersistDataException("Program with id: " + id + " not deleted: " + e.getMessage());
+        }
     }
 
 }
