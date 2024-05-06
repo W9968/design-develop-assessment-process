@@ -8,6 +8,7 @@ import { LuChevronFirst, LuChevronLast, LuChevronLeft, LuChevronRight } from 're
 import { type ColumnDef, flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, type PaginationState, useReactTable } from '@tanstack/react-table'
 
 import { mr } from '@/utils/class-authority-merge'
+import { Linker } from '@/ui/link'
 
 interface ComponentProps<T> {
   data: T[]
@@ -107,40 +108,55 @@ export function DataTable<T>({ data, columns, paging }: PropsWithChildren<Compon
 
   return (
     <div className='bg-primary-white border-[2px] border-gray-200'>
-      <table className='w-full'>
-        <thead className='h-[42px] bg-gray-50 border-y borer-gray-250'>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  colSpan={header.colSpan}
-                  className='text-start text-sm text-content-disabled font-medium capitalize px-3'
-                  style={{ width: header.getSize() !== 150 ? header.getSize() : 'auto' }}>
-                  {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <tr key={row.id} data-state={row.getIsSelected() && 'selected'} className='h-[64px] border-b border-gray-250 text-start'>
-                {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className='text-start font-normal text-sm text-content-display px-3'>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
+      {!table.getRowModel().rows?.length ? (
+        <main id='content'>
+          <div className='text-center py-10 px-4 sm:px-6 lg:px-8'>
+            <h1 className='block text-5xl font-bold text-content-display'>[]!</h1>
+            <p className='mt-3 text-content-prompt font-[550]'>Oops, nothing to show.</p>
+            <p className='text-content-disabled'>The data you are looking for is not available.</p>
+            <div className='mt-5 flex flex-col justify-center items-center'>
+              <Linker title={'create'} href={`${pathname}/create`} className='w-fit' />
+            </div>
+          </div>
+        </main>
+      ) : (
+        <table className='w-full'>
+          <thead className='h-[42px] bg-gray-50 border-y borer-gray-250'>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    className='text-start text-sm text-content-disabled font-medium capitalize px-3'
+                    style={{ width: header.getSize() !== 150 ? header.getSize() : 'auto' }}>
+                    {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                  </th>
                 ))}
               </tr>
-            ))
-          ) : (
-            <tr aria-colspan={columns.length}>
-              <th>No results.</th>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <tr key={row.id} data-state={row.getIsSelected() && 'selected'} className='h-[64px] border-b border-gray-250 text-start'>
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className='text-start font-normal text-sm text-content-display px-3'>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            ) : (
+              <tr aria-colspan={columns.length}>
+                <td className='text-center text-sm text-content-display py-4' colSpan={columns.length}>
+                  No data available
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      )}
 
       <div className='px-6 py-4'>
         <div className='flex items-center justify-between px-2'>
