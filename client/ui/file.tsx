@@ -141,7 +141,7 @@ export const FileUpload: FC<ComponentProps> = forwardRef<HTMLInputElement, Compo
         </div>
       ) : (
         <label htmlFor={label} className='w-full flex-1'>
-          <div className={mr(inputVariant({ variant, size }), error && 'border border-accent-error focus:border-red-500 focus:ring-red-500')}>
+          <div className={mr(inputVariant({ variant, size }), error && 'border-[2px] border-accent-error focus:border-red-500 focus:ring-red-500')}>
             <TbFileUpload size={18} className='text-content-prompt' />
             <span className='text-sm font-[500] text-content-disabled first-letter:uppercase'>upload file</span>
           </div>

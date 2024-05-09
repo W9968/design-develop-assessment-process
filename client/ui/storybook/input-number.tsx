@@ -50,7 +50,7 @@ export const InputNumber: FC<ComponentProps> = forwardRef<HTMLInputElement, Comp
             {required && <span className='text-accent-error ml-1 text-sm'>*</span>}
           </label>
         )}
-        <div className={mr(inputNumberVariant({ variant, size }), error && 'border border-accent-error focus:border-red-500 focus:ring-red-500')}>
+        <div className={mr(inputNumberVariant({ variant, size }), error && 'border-[2px] border-accent-error focus:border-red-500 focus:ring-red-500')}>
           <div className='w-full flex justify-between items-center gap-x-3'>
             <div>
               <input ref={ref} id={label} className='p-0 bg-transparent border-0 text-gray-800 focus:ring-0' type='number' readOnly value={value} {...rest} />

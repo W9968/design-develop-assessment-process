@@ -8,6 +8,7 @@ interface ProgramType {
   programEndDate?: string
   programEstimatedDuration: number
   programStatus?: string
+  createdAt: string
   provider: {
     id?: string
     programProviderName: string
