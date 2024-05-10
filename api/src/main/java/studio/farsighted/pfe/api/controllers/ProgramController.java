@@ -24,7 +24,7 @@ public class ProgramController {
 
     @GetMapping(value = "", params = {"query", "status", "industry"})
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Page<ProgramEntity>> index(@RequestParam(value = "query", required = false) String query, @RequestParam(value = "status", required = false) String status, @RequestParam(value = "industry", required = false) String industry, @PageableDefault(size = 10, page = 0, sort = "programEstimatedDuration", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<ProgramEntity>> index(@RequestParam(value = "query", required = false) String query, @RequestParam(value = "status", required = false) String status, @RequestParam(value = "industry", required = false) String industry, @PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
             return ResponseEntity.ok(programService.get(query, status, industry, pageable));
         } catch (Exception e) {

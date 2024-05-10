@@ -27,7 +27,7 @@ export const formProgramDefaultValues: yup.InferType<typeof formProgramSchema> =
   programStartDate: '',
   programEndDate: '',
   programEstimatedDuration: 1,
-  programStatus: '',
+  programStatus: 'STARTING',
   provider: {
     id: '',
     programProviderName: '',

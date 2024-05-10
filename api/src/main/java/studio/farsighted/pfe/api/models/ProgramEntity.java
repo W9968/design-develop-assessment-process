@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
 import java.util.List;
@@ -43,6 +44,10 @@ public class ProgramEntity {
 
     @Column(name = "program-status")
     private String programStatus;
+
+    @CreatedDate
+    @Column(name = "program-created-at", updatable = false)
+    private Date createdAt = new Date();
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(referencedColumnName = "id")

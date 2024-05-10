@@ -101,13 +101,13 @@ export default function Page({ params, searchParams }: { params: { slug: string 
                   required
                   label='select status'
                   placeholder={'Select status'}
-                  value={field.value}
+                  value={field.value ? field.value : 'STARTING'}
                   onChange={(e) => field.onChange(e)}
                   data={[
                     { label: 'Active', value: 'ACTIVE' },
-                    { label: 'Draft', value: 'DRAFT' },
                     { label: 'Pending', value: 'PENDING' },
-                    { label: 'Inactive', value: 'INACTIVE' },
+                    { label: 'Starting', value: 'STARTING' },
+                    { label: 'Suspended', value: 'SUSPENDED' },
                     { label: 'Completed', value: 'COMPLETED' },
                   ]}
                   error={errors.programStatus && errors.programStatus.message}
@@ -153,12 +153,23 @@ export default function Page({ params, searchParams }: { params: { slug: string 
               <Controller
                 name='programStartDate'
                 control={control}
-                render={({ field }) => <Input {...field} label='starting date' required type='date' error={errors.programStartDate && errors.programStartDate.message} />}
+                render={({ field }) => (
+                  <Input {...field} value={field.value.substring(0, 10)} label='starting date' required type='date' error={errors.programStartDate && errors.programStartDate.message} />
+                )}
               />
               <Controller
                 name='programEndDate'
                 control={control}
-                render={({ field }) => <Input {...field} label='ending date' type='date' required error={errors.programEndDate && errors.programEndDate.message} />}
+                render={({ field }) => (
+                  <Input
+                    {...field}
+                    value={field.value ? field.value.substring(0, 10) : undefined}
+                    label='ending date'
+                    type='date'
+                    required
+                    error={errors.programEndDate && errors.programEndDate.message}
+                  />
+                )}
               />
             </div>
           </div>
