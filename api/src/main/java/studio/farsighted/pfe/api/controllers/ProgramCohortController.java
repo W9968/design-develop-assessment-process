@@ -32,6 +32,16 @@ public class ProgramCohortController {
         }
     }
 
+    @GetMapping(value = "/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<ProgramCohortEntity> show(@PathVariable UUID id) {
+        try {
+            return ResponseEntity.ok(programCohortService.find(id));
+        } catch (Exception e) {
+            throw new PersistDataException("Program Cohort not found: " + e.getMessage());
+        }
+    }
+
     @PostMapping(value = "", params = {"programId"})
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<ProgramCohortEntity> save(@RequestParam(value = "programId") UUID id, @RequestBody ProgramCohortEntity programCohort) {
@@ -39,6 +49,27 @@ public class ProgramCohortController {
             return ResponseEntity.ok(programCohortService.save(id, programCohort));
         } catch (Exception e) {
             throw new PersistDataException("Program Cohort not saved: " + e.getMessage());
+        }
+    }
+
+    @PutMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<ProgramCohortEntity> update(@RequestBody ProgramCohortEntity programCohort) {
+        try {
+            return ResponseEntity.ok(programCohortService.update(programCohort));
+        } catch (Exception e) {
+            throw new PersistDataException("Program Cohort not updated: " + e.getMessage());
+        }
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<Boolean> delete(@PathVariable("id") UUID id) {
+        try {
+            programCohortService.delete(id);
+            return ResponseEntity.ok(true);
+        } catch (Exception e) {
+            throw new PersistDataException("Program Cohort not deleted: " + e.getMessage());
         }
     }
 

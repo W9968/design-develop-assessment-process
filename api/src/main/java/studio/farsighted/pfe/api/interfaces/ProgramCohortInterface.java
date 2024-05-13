@@ -10,6 +10,8 @@ public interface ProgramCohortInterface {
 
     List<ProgramCohortEntity> findByProgram(UUID id);
 
+    ProgramCohortEntity find(UUID id);
+
     ProgramCohortEntity save(UUID id, ProgramCohortEntity programCohortEntity);
 
     ProgramCohortEntity update(ProgramCohortEntity programCohortEntity);

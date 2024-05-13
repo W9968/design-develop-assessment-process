@@ -1,3 +1,13 @@
+interface CohortType {
+  id?: string
+  cohortName: string
+  cohortStatus: string
+  cohortStartDate: string
+  cohortEndDate: string
+  cohortDuration: number
+  cohortDescription: string
+}
+
 interface ProgramType {
   id?: string
   programPicture: string
@@ -7,7 +17,7 @@ interface ProgramType {
   programStartDate: string
   programEndDate?: string
   programEstimatedDuration: number
-  programStatus?: string
+  programStatus: string
   createdAt: string
   provider: {
     id?: string
@@ -15,7 +25,7 @@ interface ProgramType {
     programProviderLogo?: string
     programProviderWebsite?: string
   }
-  cohorts: {}[]
+  cohorts: CohortType[]
 }
 
 type ProgramResponseType = PageableType & {

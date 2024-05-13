@@ -93,3 +93,18 @@ export async function DELETE(id: string): Promise<ProgramType> {
       throw new Error(err.message)
     })
 }
+
+export async function DELETE_COHORT(id: string): Promise<ProgramType> {
+  return await fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/program/cohort/${id}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      revalidatePath('/dashboard/programs/detail')
+      return data
+    })
+    .catch((err) => {
+      throw new Error(err.message)
+    })
+}

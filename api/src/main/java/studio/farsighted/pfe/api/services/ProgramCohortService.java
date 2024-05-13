@@ -31,6 +31,10 @@ public class ProgramCohortService implements ProgramCohortInterface {
         return programCohortRepository.findAllByProgramId(id);
     }
 
+    @Override
+    public ProgramCohortEntity find(UUID id) {
+        return programCohortRepository.findById(id).get();
+    }
 
     @Override
     public ProgramCohortEntity save(UUID id, ProgramCohortEntity programCohortEntity) {

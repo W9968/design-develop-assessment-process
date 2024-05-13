@@ -101,12 +101,12 @@ export default function Page({ params, searchParams }: { params: { slug: string 
                   required
                   label='select status'
                   placeholder={'Select status'}
-                  value={field.value ? field.value : 'STARTING'}
+                  value={field.value}
                   onChange={(e) => field.onChange(e)}
                   data={[
-                    { label: 'Active', value: 'ACTIVE' },
-                    { label: 'Pending', value: 'PENDING' },
+                    { label: 'Boarding', value: 'BOARDING' },
                     { label: 'Starting', value: 'STARTING' },
+                    { label: 'Ongoing', value: 'ONGOING' },
                     { label: 'Suspended', value: 'SUSPENDED' },
                     { label: 'Completed', value: 'COMPLETED' },
                   ]}
