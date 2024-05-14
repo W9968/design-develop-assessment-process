@@ -27,6 +27,7 @@ export default function Page({ params, searchParams }: { params: { slug: string 
     handleSubmit,
     control,
     reset,
+    setValue,
   } = useForm({
     resolver: yupResolver(formProgramSchema),
     defaultValues: formProgramDefaultValues,
@@ -37,6 +38,12 @@ export default function Page({ params, searchParams }: { params: { slug: string 
       FIND(searchParams.id).then((data) => reset(data))
     }
   }, [searchParams.id]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  useLayoutEffect(() => {
+    if (params.slug === 'create') {
+      setValue('programStatus', 'ONBOARDING')
+    }
+  }, [params.slug, setValue])
 
   return (
     <div className='h-full min-h-full w-full'>
@@ -93,27 +100,29 @@ export default function Page({ params, searchParams }: { params: { slug: string 
               )}
             />
 
-            <Controller
-              name='programStatus'
-              control={control}
-              render={({ field }) => (
-                <DropDown
-                  required
-                  label='select status'
-                  placeholder={'Select status'}
-                  value={field.value}
-                  onChange={(e) => field.onChange(e)}
-                  data={[
-                    { label: 'Boarding', value: 'BOARDING' },
-                    { label: 'Starting', value: 'STARTING' },
-                    { label: 'Ongoing', value: 'ONGOING' },
-                    { label: 'Suspended', value: 'SUSPENDED' },
-                    { label: 'Completed', value: 'COMPLETED' },
-                  ]}
-                  error={errors.programStatus && errors.programStatus.message}
-                />
-              )}
-            />
+            {params.slug !== 'create' && (
+              <Controller
+                name='programStatus'
+                control={control}
+                render={({ field }) => (
+                  <DropDown
+                    required
+                    label='select status'
+                    placeholder={'Select status'}
+                    value={field.value}
+                    onChange={(e) => field.onChange(e)}
+                    data={[
+                      { label: 'OnBoarding', value: 'ONBOARDING' },
+                      { label: 'Starting', value: 'STARTING' },
+                      { label: 'Ongoing', value: 'ONGOING' },
+                      { label: 'Suspended', value: 'SUSPENDED' },
+                      { label: 'Completed', value: 'COMPLETED' },
+                    ]}
+                    error={errors.programStatus && errors.programStatus.message}
+                  />
+                )}
+              />
+            )}
 
             <Controller
               name='programName'

@@ -41,6 +41,7 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
           <div className='grid grid-cols-2 gap-4 mt-4'>
             <div>
               <p className='text-sm text-content-disabled'>Program Image</p>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={program.programPicture} alt={program.programName} className='w-12 h-12 object-cover rounded' />
             </div>
             <div>
@@ -87,11 +88,7 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
             </div>
           </div>
           <div className='flex flex-col gap-2'>
-            <DataTable<CohortType>
-              rounded
-              data={program.cohorts?.sort((a, b) => (new Date(a.cohortStartDate).toLocaleDateString() > new Date(b.cohortStartDate).toLocaleDateString() ? -1 : 1))}
-              columns={programCohortColumns}
-            />
+            <DataTable<CohortType> rounded data={program.cohorts?.reverse()} columns={programCohortColumns} />
           </div>
         </div>
       </div>
