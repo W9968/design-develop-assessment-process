@@ -6,6 +6,7 @@ interface CohortType {
   cohortEndDate: string
   cohortDuration: number
   cohortDescription: string
+  program: Omit<ProgramType, 'cohorts'>
 }
 
 interface ProgramType {

@@ -51,6 +51,7 @@ export async function PUT(data: Cohort): Promise<CohortType> {
       Authorization: `Bearer ${cookies().get('token')?.value}`,
       'Content-type': 'application/json',
     },
+    body: JSON.stringify(data),
   })
     .then((res) => res.json())
     .then((data) => {

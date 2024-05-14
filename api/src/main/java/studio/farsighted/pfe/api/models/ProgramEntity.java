@@ -45,7 +45,6 @@ public class ProgramEntity {
     @Column(name = "program-status")
     private String programStatus;
 
-
     @CreatedDate
     @Column(name = "program-created-at", updatable = false)
     private Date createdAt = new Date();
@@ -56,13 +55,5 @@ public class ProgramEntity {
 
     @OneToMany(mappedBy = "program", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProgramCohortEntity> cohorts;
-
-    @Column(name = "program-cohort length", nullable = true)
-    private Integer programCohortsLength = 0;
-
-    @PostLoad
-    private void computeProgramCohortsLength() {
-        this.programCohortsLength = this.cohorts.size();
-    }
 
 }

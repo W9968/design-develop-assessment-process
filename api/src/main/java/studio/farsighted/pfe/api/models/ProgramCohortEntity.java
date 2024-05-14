@@ -38,7 +38,7 @@ public class ProgramCohortEntity {
     @Column(name = "program-cohort-status", nullable = false)
     private String cohortStatus;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
     @JoinColumn(referencedColumnName = "id")
     @JsonIgnoreProperties("cohorts")
     private ProgramEntity program;

@@ -1,6 +1,6 @@
 'use client'
 
-import { type JSX, useLayoutEffect } from 'react'
+import { type JSX, useLayoutEffect, useState } from 'react'
 import { LuFileEdit, LuSave } from 'react-icons/lu'
 
 import { Controller, useForm } from 'react-hook-form'
@@ -20,6 +20,7 @@ import { FIND, POST, PUT } from '@/actions/cohort-server-actions'
 
 export default function Page({ params, searchParams }: { params: { slug: string }; searchParams: { program: string; id: string } }): JSX.Element {
   const { push } = useRouter()
+  const [programId, setProgramId] = useState<string>('')
 
   const {
     formState: { errors },
@@ -40,7 +41,10 @@ export default function Page({ params, searchParams }: { params: { slug: string 
 
   useLayoutEffect(() => {
     if (params.slug !== 'create' && searchParams.id) {
-      FIND(searchParams.id).then((data) => reset(data))
+      FIND(searchParams.id).then((data) => {
+        reset(data)
+        setProgramId(data.program.id!)
+      })
     }
   }, [reset, searchParams.id, params.slug])
 
@@ -71,7 +75,7 @@ export default function Page({ params, searchParams }: { params: { slug: string 
               icon={<LuFileEdit size={20} />}
               className={'gap-2 px-3'}
               onClick={handleSubmit(
-                (data) => PUT(data).then(() => push(`/dashboard/programs`)),
+                (data) => PUT(data).then(() => push(`/dashboard/programs/detail?id=${programId}`)),
                 (err) => console.log(err)
               )}
             />
