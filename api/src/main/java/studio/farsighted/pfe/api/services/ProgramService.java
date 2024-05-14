@@ -21,8 +21,8 @@ public class ProgramService implements ProgramInterface {
     private ProgramProviderRepository programProviderRepository;
 
     @Override
-    public Page<ProgramEntity> get(String query, String status, String industry, Pageable pageable) {
-        return programRepository.findProgramsByFilterCriteria(query, status, industry, pageable);
+    public Page<ProgramEntity> get(String query, String status, Pageable pageable) {
+        return programRepository.findProgramsByFilterCriteria(query, status, pageable);
     }
 
     @Override
