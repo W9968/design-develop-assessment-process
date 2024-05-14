@@ -77,6 +77,12 @@ export const ServerSelect: FC<ComponentProps> = forwardRef<HTMLDivElement, Compo
       }
     }
 
+    useEffect(() => {
+      if (!searchParams.get(paramQuery)) {
+        setSelectedValues([])
+      }
+    }, [paramQuery, searchParams])
+
     return (
       <div ref={ref} onBlur={() => console.log('mouse out')} className={mr('flex flex-col items-start gap-1 self-stretch select-none relative')}>
         {label && (

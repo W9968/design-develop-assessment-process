@@ -66,7 +66,7 @@ export const programColumns: ColumnDef<ProgramType>[] = [
       switch (row.original.programStatus) {
         case 'STARTING':
           return <Chip title={row.original.programStatus} variant='default' />
-        case 'BOARDING':
+        case 'ONBOARDING':
           return <Chip title={row.original.programStatus} variant='content' />
         case 'ONGOING':
           return <Chip title={row.original.programStatus} variant='info' />
