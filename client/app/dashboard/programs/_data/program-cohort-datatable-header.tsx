@@ -3,7 +3,7 @@
 import Link from 'next/link'
 
 import type { ColumnDef } from '@tanstack/react-table'
-import { LuClipboardEdit, LuTrash } from 'react-icons/lu'
+import { LuClipboardEdit, LuEye, LuTrash } from 'react-icons/lu'
 
 import { Chip } from '@/ui/chip'
 import { mr } from '@/utils/class-authority-merge'
@@ -78,6 +78,11 @@ export const programCohortColumns: ColumnDef<CohortType>[] = [
         <Link passHref href={`/dashboard/programs/cohorts/${row.original.cohortName.replaceAll(' ', '-')}?id=${row.original.id}`}>
           <button title='Edit startup information' className='flex'>
             <LuClipboardEdit size={20} className='text-accent-link' />
+          </button>
+        </Link>
+        <Link passHref href={`/dashboard/programs/cohorts/detail?id=${row.original.id}`}>
+          <button title='More information' className='flex'>
+            <LuEye size={20} className='text-accent-success' />
           </button>
         </Link>
         <div className='flex-1' />

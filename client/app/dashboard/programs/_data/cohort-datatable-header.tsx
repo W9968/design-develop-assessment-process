@@ -81,7 +81,7 @@ export const cohortColumns: ColumnDef<CohortType>[] = [
             <LuClipboardEdit size={20} className='text-accent-link' />
           </button>
         </Link>
-        <Link passHref href={`/dashboard/programs/detail?id=${row.original.id}`}>
+        <Link passHref href={`/dashboard/programs/cohorts/detail?id=${row.original.id}`}>
           <button title='More information' className='flex'>
             <LuEye size={20} className='text-accent-success' />
           </button>
