@@ -96,7 +96,19 @@ export const ServerSelect: FC<ComponentProps> = forwardRef<HTMLDivElement, Compo
             <div onClick={() => setIsOpen(!isOpen)} className='flex-1 h-full flex items-center gap-2 cursor-pointer'>
               <div className='flex-1'>
                 {selectedValues.length > 0 ? (
-                  <div className='flex items-center gap-1'>{selectedValues.length === 1 ? selectedValues.join(',') : `${selectedValues.length} selected`}</div>
+                  <div className='flex items-center gap-1'>
+                    {selectedValues.length === 1
+                      ? // Find the corresponding label for the selected value
+                        data.find((item) => item.value === selectedValues[0])?.label || selectedValues[0]
+                      : // Display labels of all selected values
+                        selectedValues
+                          .map(
+                            (value) =>
+                              // Find the corresponding label for each selected value
+                              data.find((item) => item.value === value)?.label || value
+                          )
+                          .join(', ')}
+                  </div>
                 ) : placeholder ? (
                   placeholder
                 ) : (

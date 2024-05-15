@@ -3,23 +3,18 @@
 import Link from 'next/link'
 
 import type { ColumnDef } from '@tanstack/react-table'
-import { LuClipboardEdit, LuTrash } from 'react-icons/lu'
+import { LuClipboardEdit, LuEye, LuTrash } from 'react-icons/lu'
 
 import { Chip } from '@/ui/chip'
 import { mr } from '@/utils/class-authority-merge'
 import { DELETE } from '@/actions/cohort-server-actions'
 
-export const programCohortColumns: ColumnDef<CohortType>[] = [
+export const cohortColumns: ColumnDef<CohortType>[] = [
   {
     id: 'cohortName',
     header: 'Cohort Name',
     accessorKey: 'cohortName',
-    cell: ({ row }) => (
-      <div className='flex flex-col items-start gap-2'>
-        <p className='text-sm text-content-display capitalize'>{row.original.cohortName}</p>
-        <p className='text-xs text-content-disabled line-clamp-1'>{row.original.cohortDescription.slice(0, 25)}...</p>
-      </div>
-    ),
+    cell: ({ row }) => <p className='text-content-display capitalize'>{row.original.cohortName}</p>,
   },
   {
     id: 'cohortStatus',
@@ -63,6 +58,12 @@ export const programCohortColumns: ColumnDef<CohortType>[] = [
   },
 
   {
+    id: 'cohortProgram',
+    header: 'Program',
+    accessorKey: 'program.programName',
+  },
+
+  {
     id: 'actions',
     header: (row) => <div className='flex justify-end capitalize'>{row.header.id}</div>,
     accessorKey: 'id',
@@ -78,6 +79,11 @@ export const programCohortColumns: ColumnDef<CohortType>[] = [
         <Link passHref href={`/dashboard/programs/cohorts/${row.original.cohortName.replaceAll(' ', '-')}?id=${row.original.id}`}>
           <button title='Edit startup information' className='flex'>
             <LuClipboardEdit size={20} className='text-accent-link' />
+          </button>
+        </Link>
+        <Link passHref href={`/dashboard/programs/detail?id=${row.original.id}`}>
+          <button title='More information' className='flex'>
+            <LuEye size={20} className='text-accent-success' />
           </button>
         </Link>
         <div className='flex-1' />

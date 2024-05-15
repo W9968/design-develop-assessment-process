@@ -32,3 +32,7 @@ interface ProgramType {
 type ProgramResponseType = PageableType & {
   content: ProgramType[]
 }
+
+type CohortResponseType = PageableType & {
+  content: CohortType[]
+}
