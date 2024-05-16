@@ -24,7 +24,7 @@ public class ProgramCohortController {
 
     @GetMapping(value = "", params = {"programId"})
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Page<ProgramCohortEntity>> index(@RequestParam(value = "programId", required = false) UUID programId, @PageableDefault(size = 10, page = 0, sort = "cohortStartDate   ", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<ProgramCohortEntity>> index(@RequestParam(value = "programId", required = false) UUID programId, @PageableDefault(size = 10, page = 0, sort = "cohortStartDate", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
             if (programId == null)
                 return ResponseEntity.ok(programCohortService.get(pageable));
