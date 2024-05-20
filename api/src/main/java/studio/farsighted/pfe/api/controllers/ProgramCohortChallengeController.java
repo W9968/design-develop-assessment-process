@@ -54,7 +54,7 @@ public class ProgramCohortChallengeController {
     public ResponseEntity<Boolean> delete(@PathVariable UUID id) {
         try {
             programCohortChallengeService.delete(id);
-            return new ResponseEntity<>(true, HttpStatus.NO_CONTENT);
+            return ResponseEntity.ok(true);
         } catch (Exception e) {
             throw new PersistDataException("Program Cohort Challenge not deleted: " + e.getMessage());
         }

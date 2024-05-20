@@ -29,6 +29,8 @@ public class ProgramCohortChallengeService implements ProgramCohortChallengeInte
 
     @Override
     public ProgramCohortChallengeEntity update(ProgramCohortChallengeEntity programCohortChallengeEntity) {
+        ProgramCohortChallengeEntity entity = programCohortChallengeRepository.findById(programCohortChallengeEntity.getId()).orElseThrow(() -> new PersistDataException("Cohort Challenge not found"));
+        programCohortChallengeEntity.setCohort(entity.getCohort());
         return programCohortChallengeRepository.save(programCohortChallengeEntity);
     }
 
@@ -39,7 +41,7 @@ public class ProgramCohortChallengeService implements ProgramCohortChallengeInte
 
     @Override
     public void delete(UUID id) {
-
+        programCohortChallengeRepository.deleteById(id);
     }
 
     @Override
