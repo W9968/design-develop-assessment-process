@@ -108,7 +108,7 @@ export const programColumns: ColumnDef<ProgramType>[] = [
   {
     id: 'cohorts',
     header: 'Cohorts',
-    accessorKey: 'cohorts.length',
+    accessorFn: (row) => `${row.cohorts.length} cohorts`,
   },
   {
     id: 'actions',

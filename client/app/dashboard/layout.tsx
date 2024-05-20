@@ -3,9 +3,6 @@ import '@/styles/main.css'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-
 import { DashboardHeader } from '@/components/dashboard-header'
 import { DashboardSidebar } from '@/components/dahsboard-sidebar'
 
@@ -22,10 +19,6 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  if (!cookies().get('token')) {
-    redirect('/')
-  }
-
   return (
     <DashboardProvider>
       <div className={mr('flex flex-col w-full h-screen max-h-screen')}>

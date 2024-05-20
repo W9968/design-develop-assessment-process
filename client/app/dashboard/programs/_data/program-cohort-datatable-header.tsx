@@ -61,7 +61,11 @@ export const programCohortColumns: ColumnDef<CohortType>[] = [
     header: 'End Date',
     accessorFn: (row) => row.cohortEndDate.slice(0, 10),
   },
-
+  {
+    id: 'cohortChallenges',
+    header: 'Challenges',
+    accessorFn: (row) => `${row.challenges.length} challenges`,
+  },
   {
     id: 'actions',
     header: (row) => <div className='flex justify-end capitalize'>{row.header.id}</div>,

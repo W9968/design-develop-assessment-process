@@ -26,7 +26,7 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
           <Linker
             key={'edit-link-program'}
             title={'edit program'}
-            href={`/dashboard/programs/${program.programName}?id=${program.id}`}
+            href={`/dashboard/programs/${program.programName.replaceAll(' ', '-')}?id=${program.id}`}
             size={'large'}
             icon={<LuFileEdit size={20} />}
             className={'gap-2 px-3'}

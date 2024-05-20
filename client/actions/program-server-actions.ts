@@ -46,7 +46,10 @@ export async function FIND(id: string): Promise<ProgramType> {
     headers: { Authorization: `Bearer ${cookies().get('token')?.value}` },
   })
     .then((res) => res.json())
-    .then((data) => data)
+    .then((data) => {
+      revalidatePath('/dashboard/programs/detail')
+      return data
+    })
     .catch((err) => {
       throw new Error(err.message)
     })
@@ -64,6 +67,7 @@ export async function PUT(program: Program): Promise<string> {
     .then((res) => res.json())
     .then((data) => {
       revalidatePath('/dashboard/programs')
+      revalidatePath(`/dashboard/programs/detail`)
       return data
     })
     .catch((err) => {

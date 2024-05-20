@@ -53,7 +53,7 @@ export async function FIND(id: string): Promise<CohortType> {
   })
     .then((res) => res.json())
     .then((data) => {
-      revalidatePath('/dashboard/programs/detail')
+      revalidatePath('/dashboard/programs/cohort/detail')
       return data
     })
     .catch((err) => {

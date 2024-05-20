@@ -62,7 +62,11 @@ export const cohortColumns: ColumnDef<CohortType>[] = [
     header: 'Program',
     accessorKey: 'program.programName',
   },
-
+  {
+    id: 'cohortChallenges',
+    header: 'Challenges',
+    accessorFn: (row) => `${row.challenges.length} challenges`,
+  },
   {
     id: 'actions',
     header: (row) => <div className='flex justify-end capitalize'>{row.header.id}</div>,

@@ -1,3 +1,13 @@
+interface ChallengeType {
+  id?: string
+  challengeTitle: string
+  challengeRequirement: string
+  challengeDescription: string
+  challengeAdvantages: string[]
+  challengeSub: string[]
+  challengeKeyword: string[]
+}
+
 interface CohortType {
   id?: string
   cohortName: string
@@ -7,6 +17,7 @@ interface CohortType {
   cohortDuration: number
   cohortDescription: string
   program: Omit<ProgramType, 'cohorts'>
+  challenges: ChallengeType[]
 }
 
 interface ProgramType {
