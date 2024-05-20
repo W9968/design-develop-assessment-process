@@ -5,10 +5,10 @@ import { GoNumber } from 'react-icons/go'
 import { redirect } from 'next/navigation'
 import { Linker } from '@/ui/link'
 import { Chip } from '@/ui/chip'
+import { DataTable } from '@/ui/storybook/data-table'
 
 import { ContentHeader } from '@/components/content-header'
 import { FIND } from '@/actions/program-server-actions'
-import { DataTable } from '@/ui/storybook/data-table'
 import { programCohortColumns } from '@/app/dashboard/programs/_data/program-cohort-datatable-header'
 
 export default async function Page({ searchParams }: { searchParams: { id: string } }): Promise<JSX.Element> {

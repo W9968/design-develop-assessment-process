@@ -7,7 +7,7 @@ import { query } from '@/hooks/useAxios'
 import { UserStore, userStore } from '@/provider/store/user-store'
 import { formLoginSchema } from '@/validation/form-auth-validation'
 
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import { deleteCookie, getCookie, setCookie } from 'cookies-next'
 
@@ -19,6 +19,7 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
   type User = yup.InferType<typeof formLoginSchema>
 
   const { push } = useRouter()
+  const pathname: string = usePathname()
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(userStore.isAuthenticated)
   const [user, setUser] = useState<AuthUserProfileType>(userStore.user)
@@ -68,7 +69,9 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
           if (res.status === 202) {
             setUser(res.data)
             setIsAuthenticated(true)
-            push('/dashboard')
+            if (!pathname.includes('/dashboard')) {
+              push('/dashboard')
+            }
           }
         })
         .catch((err) => {
@@ -79,7 +82,7 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
     } else {
       push('/')
     }
-  }, [push, isAuthenticated])
+  }, [push, isAuthenticated, pathname])
 
   return <UserContext.Provider value={{ isAuthenticated, user, error, login, logout, emptyState }}>{children}</UserContext.Provider>
 }

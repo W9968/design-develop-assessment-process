@@ -1,14 +1,15 @@
 import { type JSX } from 'react'
-import { redirect } from 'next/navigation'
-
-import { FIND } from '@/actions/cohort-server-actions'
-import { ContentHeader } from '@/components/content-header'
-import { Linker } from '@/ui/link'
 import { LuAirplay, LuCalendarCheck, LuCalendarDays, LuFileEdit, LuStickyNote, LuText, LuTimer, LuUserSquare } from 'react-icons/lu'
-import { DataTable } from '@/ui/storybook/data-table'
-import { cohortChallengeColumns } from '@/app/dashboard/programs/_data/cohort-challenge-datatable-header'
 import { GoNumber } from 'react-icons/go'
+
+import { redirect } from 'next/navigation'
+import { Linker } from '@/ui/link'
 import { Chip } from '@/ui/chip'
+import { DataTable } from '@/ui/storybook/data-table'
+
+import { ContentHeader } from '@/components/content-header'
+import { FIND } from '@/actions/cohort-server-actions'
+import { cohortChallengeColumns } from '@/app/dashboard/programs/_data/cohort-challenge-datatable-header'
 
 export default async function Page({ searchParams }: { searchParams: { id: string } }): Promise<JSX.Element> {
   if (!searchParams.id) {
@@ -131,7 +132,7 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
               <p className='text-sm text-content-prompt mb-1'>The cohort challenges that are currently available for the cohort.</p>
             </div>
             <div>
-              <Linker title={'add new challenge'} href={`/dashboard/programs/cohorts/challenge/create?cohort=${cohort.id}`} size='large' icon={<LuStickyNote size={20} />} className={'gap-2 px-3'} />
+              <Linker title={'add new challenge'} href={`/dashboard/programs/cohorts/challenges/create?cohort=${cohort.id}`} size='large' icon={<LuStickyNote size={20} />} className={'gap-2 px-3'} />
             </div>
           </div>
           <div className='flex flex-col gap-2'>
