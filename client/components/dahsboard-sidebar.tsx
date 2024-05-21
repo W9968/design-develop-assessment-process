@@ -48,9 +48,8 @@ const sidebarItems: { title: string; path: string; icon: ReactElement; scroll: b
     scroll: true,
     icon: <MdOutlineFolderCopy size={24} />,
     subMenu: [
-      { title: 'overview', path: '/dashboard/programs' },
+      { title: 'programs', path: '/dashboard/programs' },
       { title: 'cohorts', path: '/dashboard/programs/cohorts' },
-      { title: 'assessments', path: '/dashboard/programs/assessments' },
     ],
   },
   { title: 'startups', path: '/dashboard/startups', scroll: false, icon: <MdOutlineLink size={24} /> },
