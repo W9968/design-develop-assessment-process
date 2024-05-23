@@ -1,5 +1,6 @@
 package studio.farsighted.pfe.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,7 @@ public class AxeSubEntity {
 
     @Column(name = "axe-sub-status", columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean status = true;
-    
+
     @Column(name = "axe-sub-weight")
     private Integer axeSubWeight;
 
@@ -44,6 +45,17 @@ public class AxeSubEntity {
     private AxeEntity axe;
 
     @OneToMany(mappedBy = "axeSub", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<AxeSubCriteriaEntity> criterias;
+
+    @Column(name = "axe-sub-criteria-count")
+    private Integer criteriaCount;
+
+    @PostLoad
+    private void postLoad() {
+        if (criterias != null) {
+            criteriaCount = criterias.size();
+        }
+    }
 
 }
