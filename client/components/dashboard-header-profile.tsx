@@ -1,55 +1,49 @@
 'use client'
 
-import type { FC } from 'react'
-import { useState } from 'react'
-import Link from 'next/link'
+import { type FC } from 'react'
 import { motion } from 'framer-motion'
+import { usePathname, useRouter } from 'next/navigation'
 
-import { MdLogout, MdOutlineChevronRight } from 'react-icons/md'
+import { MdOutlineChevronRight, MdOutlineLogout, MdOutlineSettings } from 'react-icons/md'
 
-interface ComponentProps {
-  image: string
-  name: string
-  email: string
-}
+import { useAuth } from '@/provider/user-provider'
+import { mr } from '@/utils/class-authority-merge'
+import { VerticalNavigation } from '@/ui/vertical-navigation'
 
-export const DashboardHeaderProfile: FC<ComponentProps> = ({ image, name, email }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+interface ComponentProps {}
+
+export const DashboardHeaderProfile: FC<ComponentProps> = () => {
+  const { push } = useRouter()
+  const { logout, user, isAuthenticated } = useAuth()
+  const pathname: string = usePathname()
 
   return (
-    <div className='relative'>
-      <button className='h-full cursor-pointer flex items-center gap-3 select-none' onClick={() => setIsOpen(!isOpen)}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={image} alt='' className='h-10 w-10 object-cover flex rounded-full' />
-        <div className={'flex flex-1 flex-col items-start'}>
-          <p className='text-primary-white text-sm capitalize'>{name}</p>
-          <p className='text-gray-300 text-xs'>{email}</p>
-        </div>
-        <motion.span initial={{ rotate: 0 }} animate={{ rotate: isOpen ? 90 : 0 }} transition={{ type: 'just' }}>
-          <MdOutlineChevronRight className='text-primary-white' size={24} />
-        </motion.span>
-      </button>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -5 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: 'just', duration: 0.3 }}
-          className='absolute top-14 right-0 w-full bg-primary-black overflow-hidden rounded'>
-          <div className='flex flex-col'>
-            <Link passHref href='' className='px-3 h-12 text-gray-300 hover:text-primary-white bg-primary-black hover:bg-gray-500 flex items-center justify-between'>
-              <p className='flex text-sm capitalize'>Profile</p>
-            </Link>
-            <Link passHref href='' className='px-3 h-12 text-gray-300 hover:text-primary-white bg-primary-black hover:bg-gray-500 flex items-center justify-between'>
-              <p className='flex text-sm capitalize'>Settings</p>
-            </Link>
-            <div className='h-px bg-gray-500' />
-            <button className='px-3 h-12 text-gray-300 hover:text-primary-white bg-primary-black hover:bg-gray-500 flex items-center justify-between'>
-              <p className='flex text-sm capitalize'>Logout</p>
-              <MdLogout size={18} />
-            </button>
+    <div>
+      <VerticalNavigation title='settings' icon={<MdOutlineSettings size={24} />} onClick={() => push('/dashboard/settings')} active={pathname.includes('/dashboard/settings')} />
+      <div className='w-full h-[1px] bg-content-display' />
+      <div className={mr('h-[82px]  flex items-center justify-center relative', pathname === '/dashboard/profile' && 'bg-content-display')}>
+        <div className={mr('w-1 h-full bg-red-200', pathname.includes('dashboard/profile') ? 'bg-primary-yellow' : 'bg-primary-black')} />
+        {!isAuthenticated ? (
+          <div className='relative flex items-center justify-center px-3'>
+            <div className='animate-ping absolute inline-flex h-3 w-3 rounded-full bg-yellow-400 opacity-75'></div>
+            <div className='absolute inline-flex rounded-full h-3 w-3 bg-yellow-600'></div>
           </div>
-        </motion.div>
-      )}
+        ) : (
+          <button className='w-full px-3 flex-1 h-full cursor-pointer flex items-center gap-3 select-none' onClick={() => push('/dashboard/profile')}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={user.profileImage ? user.profileImage : 'https://api.dicebear.com/8.x/bottts-neutral/svg?seed=Sophie'} alt='' className='h-10 w-10 object-cover flex rounded-full' />
+            <div className={'flex flex-1 flex-col items-start px-2'}>
+              <p className='text-primary-white text-base capitalize'>{`${user.firstName} ${user.middleName ? user.middleName : ''} ${user.lastName}`}</p>
+              <p className='text-gray-300 text-sm'>{user.username}</p>
+            </div>
+            <motion.span initial={{ rotate: 0 }} transition={{ type: 'just' }}>
+              <MdOutlineChevronRight className='text-primary-white' size={24} />
+            </motion.span>
+          </button>
+        )}
+      </div>
+      <div className='w-full h-[1px] bg-content-display' />
+      <VerticalNavigation title='logout' icon={<MdOutlineLogout size={24} />} onClick={() => logout().then(() => push('/'))} />
     </div>
   )
 }

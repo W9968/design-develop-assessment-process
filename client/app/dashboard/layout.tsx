@@ -3,34 +3,33 @@ import '@/styles/main.css'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-
-import { mr } from '@/utils/class-authority-merge'
 import { DashboardHeader } from '@/components/dashboard-header'
 import { DashboardSidebar } from '@/components/dahsboard-sidebar'
+
+import { mr } from '@/utils/class-authority-merge'
+
+import DashboardProvider from '@/provider/dashboard-provider'
 
 export const metadata: Metadata = {
   title: 'EY Dashboard',
   description: 'Dashboard page',
+  icons: {
+    icon: '/assets/logo/ey-logo-black.webp',
+  },
 }
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  if (!cookies().get('token')) {
-    redirect('/')
-  }
-
   return (
-    <div className={mr('flex flex-col w-full min-h-screen')}>
-      <div className='w-full h-[62px] max-h-[62px] bg-primary-black'>
-        <DashboardHeader />
-      </div>
-      <div className='flex-1 grid grid-cols-8'>
-        <div className='col-span-1 bg-primary-black'>
-          <DashboardSidebar />
+    <DashboardProvider>
+      <div className={mr('flex flex-col w-full h-screen max-h-screen')}>
+        <div className='w-full h-[62px] max-h-[62px] bg-primary-black sticky inset-0'>
+          <DashboardHeader />
         </div>
-        <div className='bg-primary-background col-span-7 p-6'>{children}</div>
+        <div className='flex-1 w-full flex overflow-hidden'>
+          <DashboardSidebar />
+          <div className='flex-1 bg-primary-background pb-6 overflow-x-hidden overflow-y-auto'>{children}</div>
+        </div>
       </div>
-    </div>
+    </DashboardProvider>
   )
 }
