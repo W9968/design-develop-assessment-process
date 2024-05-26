@@ -60,7 +60,7 @@ const sidebarItems: { title: string; path: string; icon: ReactElement; scroll: b
     icon: <MdOutlineAccountTree size={24} />,
     subMenu: [
       { title: 'overview', path: '/dashboard/axes' },
-      { title: 'categories', path: '/dashboard/axes/categories' },
+      { title: 'criteria', path: '/dashboard/axes/criteria' },
     ],
   },
   { title: 'consultants', path: '/dashboard/consultants', scroll: false, icon: <MdOutlinePeopleAlt size={24} /> },

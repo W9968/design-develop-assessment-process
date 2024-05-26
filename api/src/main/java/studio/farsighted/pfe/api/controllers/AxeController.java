@@ -43,7 +43,7 @@ public class AxeController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<AxeEntity> update(@RequestBody AxeEntity axe) {
         if (!axeService.isExist(axe.getId())) {

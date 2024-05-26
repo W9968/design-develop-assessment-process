@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -23,6 +24,9 @@ public class EvaluationEntity {
 
     @Column(name = "evaluation-feedback", columnDefinition = "TEXT")
     private String evaluationFeedback;
+
+    @Column(name = "evaluation-date")
+    private Date evaluationDate;
 
     @ManyToOne()
     @JoinColumn(referencedColumnName = "id")

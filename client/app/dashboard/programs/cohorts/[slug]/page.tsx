@@ -1,7 +1,7 @@
 'use client'
 
 import { type JSX, useLayoutEffect, useState } from 'react'
-import { LuFileEdit, LuSave } from 'react-icons/lu'
+import { LuArrowLeftToLine, LuFileEdit, LuSave } from 'react-icons/lu'
 
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -17,6 +17,7 @@ import { InputNumber } from '@/ui/storybook/input-number'
 import { ContentHeader } from '@/components/content-header'
 import { formCohortDefaultValues, formCohortSchema } from '@/validation/form-cohort-validation'
 import { FIND, POST, PUT } from '@/actions/cohort-server-actions'
+import { Linker } from '@/ui/link'
 
 export default function Page({ params, searchParams }: { params: { slug: string }; searchParams: { program: string; id: string } }): JSX.Element {
   const { push } = useRouter()
@@ -53,6 +54,15 @@ export default function Page({ params, searchParams }: { params: { slug: string 
       <ContentHeader
         title={'Program Cohort'}
         args={[
+          <Linker
+            key={'back-to-cohorts'}
+            href={`/dashboard/programs/detail?id=${searchParams.program}`}
+            title={'Cancel'}
+            size={'large'}
+            variant='link'
+            icon={<LuArrowLeftToLine />}
+            className={'gap-2 px-3'}
+          />,
           params.slug === 'create' ? (
             <Button
               key={'create-program-element'}

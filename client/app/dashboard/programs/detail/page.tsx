@@ -1,5 +1,5 @@
 import { type JSX } from 'react'
-import { LuAirplay, LuCalendarCheck, LuCalendarDays, LuDot, LuExternalLink, LuFileEdit, LuStickyNote, LuText, LuTimer, LuUserSquare } from 'react-icons/lu'
+import { LuAirplay, LuArrowLeftToLine, LuCalendarCheck, LuCalendarDays, LuDot, LuExternalLink, LuFileEdit, LuStickyNote, LuText, LuTimer, LuUserSquare } from 'react-icons/lu'
 import { GoNumber } from 'react-icons/go'
 
 import { redirect } from 'next/navigation'
@@ -23,6 +23,7 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
       <ContentHeader
         title={program.programName || 'program'}
         args={[
+          <Linker key={'back-to-programs'} href={'/dashboard/programs'} title={'Cancel'} size={'large'} variant='link' icon={<LuArrowLeftToLine />} className={'gap-2 px-3'} />,
           <Linker
             key={'edit-link-program'}
             title={'edit program'}
