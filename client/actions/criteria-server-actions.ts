@@ -42,7 +42,7 @@ export async function FIND(id: string): Promise<AxeSubCriteriaType> {
   })
     .then((res) => res.json())
     .then((data) => {
-      revalidatePath('/dashboard/axes/criteria/[slug]')
+      revalidatePath('/dashboard/axes/criteria')
       return data
     })
     .catch((err) => {
