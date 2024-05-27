@@ -18,8 +18,19 @@ interface AxeSubType {
   criteriaCount: number
 }
 
-interface AxeSubCriteriaType {}
+interface AxeSubCriteriaType {
+  id?: string
+  axeSubCriteriaName: string
+  axeSubCriteriaDescription: string
+  status: boolean
+  axeSubCriteriaWeight: number
+  axeSub: AxeSubType
+}
 
 type AxeResponseType = PageableType & {
   content: AxeType[]
+}
+
+type AxeSubCriteriaResponseType = PageableType & {
+  content: AxeSubCriteriaType[]
 }

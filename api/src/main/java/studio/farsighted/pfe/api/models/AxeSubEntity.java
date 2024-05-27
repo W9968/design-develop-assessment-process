@@ -32,19 +32,19 @@ public class AxeSubEntity {
     @Column(name = "axe-sub-status", columnDefinition = "BOOLEAN DEFAULT TRUE")
     private boolean status = true;
 
-    @Column(name = "axe-sub-weight")
+    @Column(name = "axe-sub-weight", columnDefinition = "FLOAT DEFAULT 0")
     private Integer axeSubWeight;
 
     @CreatedDate
     @Column(name = "user-created-at", updatable = false)
     private Date createdAt = new Date();
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     @JsonIgnoreProperties("axeSubs")
     private AxeEntity axe;
 
-    @OneToMany(mappedBy = "axeSub", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "axeSub", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<AxeSubCriteriaEntity> criterias;
 

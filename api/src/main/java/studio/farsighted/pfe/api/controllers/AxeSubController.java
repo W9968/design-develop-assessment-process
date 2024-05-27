@@ -18,6 +18,16 @@ public class AxeSubController {
     @Autowired
     private AxeSubService axeSubService;
 
+    @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<Iterable<AxeSubEntity>> index() {
+        try {
+            return ResponseEntity.ok(axeSubService.findAll());
+        } catch (Exception e) {
+            throw new PersistDataException("Axe Sub not found: " + e.getMessage());
+        }
+    }
+
     @GetMapping(value = "/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<AxeSubEntity> show(@PathVariable UUID id) {
@@ -50,10 +60,10 @@ public class AxeSubController {
 
     @DeleteMapping(value = "/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    public ResponseEntity<Boolean> delete(@PathVariable UUID id) {
         try {
             axeSubService.deleteById(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(true);
         } catch (Exception e) {
             throw new PersistDataException("Axe Sub not deleted: " + e.getMessage());
         }

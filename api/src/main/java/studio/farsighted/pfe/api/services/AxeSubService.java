@@ -9,6 +9,7 @@ import studio.farsighted.pfe.api.models.AxeSubEntity;
 import studio.farsighted.pfe.api.repositories.AxeRepository;
 import studio.farsighted.pfe.api.repositories.AxeSubRepository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,6 +20,11 @@ public class AxeSubService implements AxeSubInterface {
 
     @Autowired
     private AxeRepository axeRepository;
+
+    @Override
+    public List<AxeSubEntity> findAll() {
+        return axeSubRepository.findAll();
+    }
 
     @Override
     public AxeSubEntity findById(UUID id) {

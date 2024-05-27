@@ -23,11 +23,11 @@ public class AxeSubCriteriaController {
     @Autowired
     private AxeSubCriteriaService axeSubCriteriaService;
 
-    @GetMapping(value = "", params = {"subId"})
+    @GetMapping
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<Page<AxeSubCriteriaEntity>> index(@RequestParam(value = "subId") UUID subId, @RequestParam(value = "query", required = false) String query, @PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public ResponseEntity<Page<AxeSubCriteriaEntity>> index(@RequestParam(value = "name", required = false) String name, @RequestParam(value = "query", required = false) String query, @RequestParam(value = "status", required = false) Boolean status, @PageableDefault(size = 10, page = 0, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         try {
-            return ResponseEntity.ok(axeSubCriteriaService.get(subId, query, pageable));
+            return ResponseEntity.ok(axeSubCriteriaService.get(name, query, status, pageable));
         } catch (Exception e) {
             throw new PaginationBoundException("Axe sub criteria not found: " + e.getMessage());
         }
