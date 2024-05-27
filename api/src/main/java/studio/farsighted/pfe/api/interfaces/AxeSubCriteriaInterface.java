@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface AxeSubCriteriaInterface {
 
-    Page<AxeSubCriteriaEntity> get(UUID id, String query, Pageable pageable);
+    Page<AxeSubCriteriaEntity> get(String name, String query, Boolean status, Pageable pageable);
 
     AxeSubCriteriaEntity find(UUID id);
 

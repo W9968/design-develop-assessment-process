@@ -43,11 +43,11 @@ public class AxeSubCriteriaController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<AxeSubCriteriaEntity> update(@PathVariable("id") UUID id, @RequestBody AxeSubCriteriaEntity axeSubCriteriaEntity) {
-        if (!axeSubCriteriaService.existsById(id)) {
-            throw new PersistDataException("Axe sub criteria with id: " + id + " not found");
+    public ResponseEntity<AxeSubCriteriaEntity> update(@RequestBody AxeSubCriteriaEntity axeSubCriteriaEntity) {
+        if (!axeSubCriteriaService.existsById(axeSubCriteriaEntity.getId())) {
+            throw new PersistDataException("Axe sub criteria with id: " + axeSubCriteriaEntity.getId() + " not found");
         }
         return ResponseEntity.ok(axeSubCriteriaService.update(axeSubCriteriaEntity));
     }

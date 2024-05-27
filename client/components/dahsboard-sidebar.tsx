@@ -11,7 +11,7 @@ import { DashboardHeaderProfile } from '@/components/dashboard-header-profile'
 import { useDashboard } from '@/provider/dashboard-provider'
 
 export const DashboardSidebar: FC = () => {
-  const { push } = useRouter()
+  const { push, prefetch } = useRouter()
   const pathname: string = usePathname()
   const { sidebarState } = useDashboard()
 
@@ -29,6 +29,7 @@ export const DashboardSidebar: FC = () => {
             haveSubmenu={item.scroll}
             onClick={() => push(item.path)}
             active={item.path === '/dashboard' ? pathname === '/dashboard' : pathname.includes(item.path)}
+            onMouseEnter={() => prefetch(item.path)}
           />
         ))}
       </div>

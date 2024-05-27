@@ -22,8 +22,8 @@ public class AxeSubCriteriaService implements AxeSubCriteriaInterface {
     private AxeSubRepository axeSubRepository;
 
     @Override
-    public Page<AxeSubCriteriaEntity> get(UUID id, String query, Pageable pageable) {
-        return axeSubCriteriaRepository.filterBasedOnCriteria(id, query, pageable);
+    public Page<AxeSubCriteriaEntity> get(String name, String query, Boolean status, Pageable pageable) {
+        return axeSubCriteriaRepository.filterBasedOnCriteria(name, query, status, pageable);
     }
 
     @Override
@@ -35,6 +35,8 @@ public class AxeSubCriteriaService implements AxeSubCriteriaInterface {
 
     @Override
     public AxeSubCriteriaEntity update(AxeSubCriteriaEntity axeSubCriteriaEntity) {
+        AxeSubCriteriaEntity entity = axeSubCriteriaRepository.findById(axeSubCriteriaEntity.getId()).orElseThrow(() -> new RuntimeException("Axe Sub Criteria not found"));
+        axeSubCriteriaEntity.setAxeSub(entity.getAxeSub());
         return axeSubCriteriaRepository.save(axeSubCriteriaEntity);
     }
 

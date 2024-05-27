@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { mr } from '@/utils/class-authority-merge'
 
-const selectVariant = cva('h-full w-full flex items-center px-2 border-[2px] disabled:bg-gray-100 disabled:pointer-events-none rounded outline-none', {
+const selectVariant = cva('h-full w-full flex items-center px-2 border-[2px] disabled:bg-gray-100 disabled:pointer-events-none rounded outline-none relative', {
   variants: {
     variant: {
       default: 'border-gray-225 text-sm focus:border-gray-500 focus:ring-gray-500',
@@ -66,7 +66,7 @@ export const DropDown: FC<ComponentProps> = forwardRef<HTMLDivElement, Component
     }
 
     return (
-      <div ref={ref} className={mr('flex flex-col items-start gap-1 self-stretch select-none relative')}>
+      <div ref={ref} className={mr('flex flex-col items-start gap-1 self-stretch select-none')}>
         {label && (
           <label htmlFor='select' className='text-sm font-[500] tracking-wide capitalize text-content-prompt'>
             <span>{label}</span>
@@ -109,6 +109,7 @@ export const DropDown: FC<ComponentProps> = forwardRef<HTMLDivElement, Component
             </div>
           )}
         </div>
+        {isOpen && <div className='absolute top-0 left-0 w-full h-full bg-transparent' onClick={() => setIsOpen(false)} />}
         {!error && hint && <p className='text-xs font-[500] text-content-disabled first-letter:uppercase'>{hint}</p>}
         {error && <p className='text-xs font-[500] text-accent-error first-letter:uppercase'>{error}</p>}
       </div>

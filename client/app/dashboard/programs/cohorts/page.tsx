@@ -48,7 +48,6 @@ export default async function Page({ searchParams }: { searchParams: { page: str
             </Suspense>
           </div>
           <div className='flex items-center gap-2'>
-            {' '}
             {searchParams.program && [
               <Linker
                 key={'create-cohort-program'}

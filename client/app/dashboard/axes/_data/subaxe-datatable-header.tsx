@@ -29,6 +29,11 @@ export const subAxeColumns: ColumnDef<AxeSubType>[] = [
     cell: ({ row }) => <div className='w-[82px]'>{row.original.status ? <Chip title={'Enabled'} variant={'success'} /> : <Chip title={'Hidden'} variant={'danger'} />}</div>,
   },
   {
+    id: 'criteriaCount',
+    header: 'Criteria',
+    accessorKey: 'criteriaCount',
+  },
+  {
     id: 'action',
     header: ({ header }) => <div className='text-end mr-5'>{header.column.id}</div>,
     accessorKey: 'id',

@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Data
@@ -29,6 +31,10 @@ public class AxeSubCriteriaEntity {
 
     @Column(name = "axe-sub-criteria-weight")
     private Integer axeSubCriteriaWeight;
+
+    @CreatedDate
+    @Column(name = "user-created-at", updatable = false)
+    private Date createdAt = new Date();
 
     @ManyToOne()
     @JoinColumn(referencedColumnName = "id")
