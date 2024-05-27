@@ -7,6 +7,7 @@ import { DashboardHeader } from '@/components/dashboard-header'
 import { DashboardSidebar } from '@/components/dahsboard-sidebar'
 
 import { mr } from '@/utils/class-authority-merge'
+import { Toaster } from 'sonner'
 
 import DashboardProvider from '@/provider/dashboard-provider'
 
@@ -27,7 +28,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
         </div>
         <div className='flex-1 w-full flex overflow-hidden'>
           <DashboardSidebar />
-          <div className='flex-1 bg-primary-background pb-6 overflow-x-hidden overflow-y-auto'>{children}</div>
+          <div className='flex-1 bg-primary-background pb-6 overflow-x-hidden overflow-y-auto'>
+            <Toaster />
+            {children}
+          </div>
         </div>
       </div>
     </DashboardProvider>

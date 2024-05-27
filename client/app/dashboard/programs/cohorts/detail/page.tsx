@@ -1,5 +1,5 @@
 import { type JSX } from 'react'
-import { LuAirplay, LuCalendarCheck, LuCalendarDays, LuFileEdit, LuStickyNote, LuText, LuTimer, LuUserSquare } from 'react-icons/lu'
+import { LuAirplay, LuArrowLeftToLine, LuCalendarCheck, LuCalendarDays, LuFileEdit, LuStickyNote, LuText, LuTimer, LuUserSquare } from 'react-icons/lu'
 import { GoNumber } from 'react-icons/go'
 
 import { redirect } from 'next/navigation'
@@ -23,6 +23,15 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
       <ContentHeader
         title={cohort.cohortName || 'cohort'}
         args={[
+          <Linker
+            key={'back-to-cohorts'}
+            href={`/dashboard/programs/detail?id=${searchParams.id}`}
+            title={'Cancel'}
+            size={'large'}
+            variant='link'
+            icon={<LuArrowLeftToLine />}
+            className={'gap-2 px-3'}
+          />,
           <Linker
             key={'edit-link-cohort'}
             title={'edit cohort'}

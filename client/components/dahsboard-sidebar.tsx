@@ -11,7 +11,7 @@ import { DashboardHeaderProfile } from '@/components/dashboard-header-profile'
 import { useDashboard } from '@/provider/dashboard-provider'
 
 export const DashboardSidebar: FC = () => {
-  const { push } = useRouter()
+  const { push, prefetch } = useRouter()
   const pathname: string = usePathname()
   const { sidebarState } = useDashboard()
 
@@ -29,6 +29,7 @@ export const DashboardSidebar: FC = () => {
             haveSubmenu={item.scroll}
             onClick={() => push(item.path)}
             active={item.path === '/dashboard' ? pathname === '/dashboard' : pathname.includes(item.path)}
+            onMouseEnter={() => prefetch(item.path)}
           />
         ))}
       </div>
@@ -60,7 +61,7 @@ const sidebarItems: { title: string; path: string; icon: ReactElement; scroll: b
     icon: <MdOutlineAccountTree size={24} />,
     subMenu: [
       { title: 'overview', path: '/dashboard/axes' },
-      { title: 'categories', path: '/dashboard/axes/categories' },
+      { title: 'criteria', path: '/dashboard/axes/criteria' },
     ],
   },
   { title: 'consultants', path: '/dashboard/consultants', scroll: false, icon: <MdOutlinePeopleAlt size={24} /> },
