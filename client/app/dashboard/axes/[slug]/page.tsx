@@ -35,7 +35,7 @@ export default function Page({ params, searchParams }: { params: { slug: string 
   useLayoutEffect(() => {
     if (params.slug !== 'create') {
       FIND(searchParams.id).then((data) => {
-        reset({ ...(({ createdAt, ...returnedData }) => returnedData)(data) })
+        reset(data)
       })
     }
   }, [params.slug, searchParams.id, reset])

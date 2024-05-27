@@ -7,7 +7,18 @@ interface AxeType {
   axeSubs: AxeSubType[]
 }
 
-interface AxeSubType {}
+interface AxeSubType {
+  id?: string
+  axeSubName: string
+  axeSubDescription: string
+  status: boolean
+  axeSubWeight: number
+  createdAt: Date
+  axe: AxeType
+  criteriaCount: number
+}
+
+interface AxeSubCriteriaType {}
 
 type AxeResponseType = PageableType & {
   content: AxeType[]

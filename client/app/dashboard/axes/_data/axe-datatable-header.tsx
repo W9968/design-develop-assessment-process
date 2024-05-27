@@ -39,14 +39,12 @@ export const axeColumns: ColumnDef<AxeType>[] = [
     accessorKey: 'axeDescription',
     cell: ({ row }) => <p className='line-clamp-1'>{row.original.axeDescription}</p>,
   },
-
   {
     id: 'status',
     header: 'Status',
     accessorKey: 'status',
     cell: ({ row }) => <div className='w-[82px]'>{row.original.status ? <Chip title={'Enabled'} variant={'success'} /> : <Chip title={'Hidden'} variant={'danger'} />}</div>,
   },
-
   {
     id: 'createdAt',
     header: () => (

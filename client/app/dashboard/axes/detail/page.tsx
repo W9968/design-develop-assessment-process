@@ -9,6 +9,7 @@ import { DataTable } from '@/ui/storybook/data-table'
 
 import { ContentHeader } from '@/components/content-header'
 import { FIND } from '@/actions/axe-server-actions'
+import { subAxeColumns } from '@/app/dashboard/axes/_data/subaxe-datatable-header'
 
 export default async function Page({ searchParams }: { searchParams: { id: string } }): Promise<JSX.Element> {
   if (!searchParams.id) {
@@ -100,7 +101,7 @@ export default async function Page({ searchParams }: { searchParams: { id: strin
             </div>
           </div>
           <div className='flex flex-col gap-2'>
-            <DataTable<AxeSubType> rounded data={[]} columns={[]} />
+            <DataTable<AxeSubType> rounded data={axe.axeSubs} columns={subAxeColumns} />
           </div>
         </div>
       </div>
