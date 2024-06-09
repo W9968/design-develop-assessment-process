@@ -89,6 +89,7 @@ export async function PUT(data: Criteria): Promise<AxeSubCriteriaType> {
 }
 
 export async function DELETE(id: string): Promise<AxeSubCriteriaType> {
+  console.log('DELETE', id)
   return fetch(`${process.env.NEXT_PUBLIC_APP_SERVER}/api/axe/sub/criteria/${id}`, {
     method: 'DELETE',
     headers: {
@@ -97,6 +98,7 @@ export async function DELETE(id: string): Promise<AxeSubCriteriaType> {
   })
     .then((res) => res.json())
     .then((data) => {
+      console.log('DELETE INSIDE', id)
       revalidatePath('/dashboard/axes/criteria')
       return data
     })

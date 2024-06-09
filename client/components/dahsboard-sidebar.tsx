@@ -3,7 +3,7 @@
 import type { FC, ReactElement } from 'react'
 
 import { usePathname, useRouter } from 'next/navigation'
-import { MdOutlineAccountTree, MdOutlineAssignment, MdOutlineBolt, MdOutlineFolderCopy, MdOutlineLink, MdOutlinePeopleAlt, MdOutlineStackedLineChart } from 'react-icons/md'
+import { MdOutlineAccountTree, MdOutlineAssignment, MdOutlineBolt, MdOutlineFolderCopy, MdOutlineFormatShapes, MdOutlineLink, MdOutlinePeopleAlt, MdOutlineStackedLineChart } from 'react-icons/md'
 
 import { VerticalNavigation } from '@/ui/vertical-navigation'
 import { DashboardHeaderProfile } from '@/components/dashboard-header-profile'
@@ -43,6 +43,7 @@ export const DashboardSidebar: FC = () => {
 const sidebarItems: { title: string; path: string; icon: ReactElement; scroll: boolean; subMenu?: { title: string; path: string }[] }[] = [
   { title: 'dashboard', path: '/dashboard', scroll: false, icon: <MdOutlineStackedLineChart size={24} /> },
   { title: 'activities', path: '/dashboard/activities', scroll: false, icon: <MdOutlineBolt size={24} /> },
+  { title: 'assessments', path: '/dashboard/assessments', scroll: false, icon: <MdOutlineFormatShapes size={24} /> },
   {
     title: 'programs',
     path: '/dashboard/programs',
@@ -65,5 +66,5 @@ const sidebarItems: { title: string; path: string; icon: ReactElement; scroll: b
     ],
   },
   { title: 'consultants', path: '/dashboard/consultants', scroll: false, icon: <MdOutlinePeopleAlt size={24} /> },
-  { title: 'evaluations', path: '/dashboard/evaluations', scroll: false, icon: <MdOutlineAssignment size={24} /> },
+  { title: 'evaluations form', path: '/dashboard/evaluations', scroll: false, icon: <MdOutlineAssignment size={24} /> },
 ]

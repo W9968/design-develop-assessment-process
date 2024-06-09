@@ -14,6 +14,7 @@ import studio.farsighted.pfe.api.models.AxeSubCriteriaEntity;
 import studio.farsighted.pfe.api.services.AxeSubCriteriaService;
 
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/axe/sub/criteria")
@@ -64,6 +65,7 @@ public class AxeSubCriteriaController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<Boolean> delete(@PathVariable("id") UUID id) {
+        Logger.getGlobal().info("Deleting axe sub criteria with id: " + id);
         if (!axeSubCriteriaService.existsById(id)) {
             throw new PersistDataException("Axe sub criteria with id: " + id + " not found");
         }

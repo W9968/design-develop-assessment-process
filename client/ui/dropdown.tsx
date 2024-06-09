@@ -2,7 +2,6 @@
 
 import { type FC, forwardRef, type ReactElement, type SelectHTMLAttributes, useEffect, useState } from 'react'
 import { LuCheck, LuChevronDown } from 'react-icons/lu'
-
 import { motion } from 'framer-motion'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { mr } from '@/utils/class-authority-merge'
@@ -65,6 +64,13 @@ export const DropDown: FC<ComponentProps> = forwardRef<HTMLDivElement, Component
       }
     }
 
+    const getSelectedLabels = () => {
+      return selectedValues.map((value) => {
+        const selectedItem = data.find((item) => item.value === value)
+        return selectedItem ? selectedItem.label : value
+      })
+    }
+
     return (
       <div ref={ref} className={mr('flex flex-col items-start gap-1 self-stretch select-none')}>
         {label && (
@@ -78,7 +84,7 @@ export const DropDown: FC<ComponentProps> = forwardRef<HTMLDivElement, Component
             <div onClick={() => setIsOpen(!isOpen)} className='flex-1 h-full flex items-center gap-2 cursor-pointer'>
               <div className='flex-1'>
                 {selectedValues.length > 0 ? (
-                  <div className='flex items-center gap-1'>{selectedValues.length === 1 ? selectedValues.join(',') : `${selectedValues.length} selected`}</div>
+                  <div className='flex items-center gap-1'>{selectedValues.length === 1 ? getSelectedLabels().join(', ') : `${selectedValues.length} selected`}</div>
                 ) : placeholder ? (
                   placeholder
                 ) : (

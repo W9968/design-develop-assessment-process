@@ -36,7 +36,7 @@ public class AxeSubCriteriaEntity {
     @Column(name = "user-created-at", updatable = false)
     private Date createdAt = new Date();
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     private AxeSubEntity axeSub;
 

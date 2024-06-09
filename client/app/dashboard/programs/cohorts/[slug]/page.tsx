@@ -13,6 +13,7 @@ import { Button } from '@/ui/button'
 import { TextArea } from '@/ui/textarea'
 import { DropDown } from '@/ui/dropdown'
 import { InputNumber } from '@/ui/storybook/input-number'
+import { toast } from 'sonner'
 
 import { ContentHeader } from '@/components/content-header'
 import { formCohortDefaultValues, formCohortSchema } from '@/validation/form-cohort-validation'
@@ -72,7 +73,10 @@ export default function Page({ params, searchParams }: { params: { slug: string 
               icon={<LuSave size={20} />}
               className={'gap-2 px-3'}
               onClick={handleSubmit(
-                (data) => POST(data, searchParams.program).then(() => push(`/dashboard/programs/detail?id=${searchParams.program}`)),
+                (data) =>
+                  POST(data, searchParams.program)
+                    .then(() => toast.success('Cohort has been Created'))
+                    .then((res) => push(`/dashboard/programs/detail?id=${searchParams.program}`)),
                 (err) => console.log(err)
               )}
             />
@@ -85,7 +89,10 @@ export default function Page({ params, searchParams }: { params: { slug: string 
               icon={<LuFileEdit size={20} />}
               className={'gap-2 px-3'}
               onClick={handleSubmit(
-                (data) => PUT(data).then(() => push(`/dashboard/programs/detail?id=${programId}`)),
+                (data) =>
+                  PUT(data)
+                    .then(() => toast.success('Cohort has been Updated'))
+                    .then(() => push(`/dashboard/programs/cohorts/detail?id=${searchParams.id}`)),
                 (err) => console.log(err)
               )}
             />
