@@ -22,10 +22,14 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
   const pathname: string = usePathname()
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(userStore.isAuthenticated)
+  const [isLoading, setIsLoading] = useState(userStore.isLoading)
+
   const [user, setUser] = useState<AuthUserProfileType>(userStore.user)
   const [error, setError] = useState<ErrorAuthType>(userStore.error)
 
   const login = async (data: User): Promise<void> => {
+    setIsLoading(true)
+    setError({ ...userStore.error })
     return await query
       .post('/auth/login', data, {})
       .then((res) => {
@@ -36,9 +40,13 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
       })
       .then(() => {
         setIsAuthenticated(true)
+        setIsLoading(false)
+        push('/dashboard')
       })
       .catch((err) => {
-        console.log(err.response.data)
+        setIsAuthenticated(false)
+        setIsLoading(false)
+        setError(err.response.data)
       })
   }
 
@@ -100,7 +108,7 @@ export default function UserProvider({ children }: ComponentProps): JSX.Element 
     }
   }, [pathname, push])
 
-  return <UserContext.Provider value={{ isAuthenticated, user, error, login, logout, emptyState }}>{children}</UserContext.Provider>
+  return <UserContext.Provider value={{ isAuthenticated, user, error, isLoading, login, logout, emptyState }}>{children}</UserContext.Provider>
 }
 
 const UserContext = createContext<UserStore>(userStore)
