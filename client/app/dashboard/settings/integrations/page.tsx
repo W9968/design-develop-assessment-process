@@ -16,7 +16,7 @@ export default function Page(): JSX.Element {
             disabled={integration.isItemDisabled}
             title={integration.isItemDisabled ? 'Feature currently being developed and not fully integrated.' : undefined}
             className='bg-primary-white border-[2px] border-gray-225 overflow-hidden rounded p-4 select-none relative disabled:opacity-65'>
-            {integration.isItemDisabled && <div className='top-0 left-0 z-10 absolute w-full h-full bg-red-300 bg-gray-400/10' />}
+            {integration.isItemDisabled && <div className='top-0 left-0 z-10 absolute w-full h-full bg-gray-400/10' />}
             <div className='w-full flex items-center justify-between mb-4'>
               <div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
