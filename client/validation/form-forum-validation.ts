@@ -5,7 +5,6 @@ export const formForumSchema = yup.object().shape({
   formName: yup.string().required('Form name is required'),
   formDescription: yup.string(),
   status: yup.boolean(),
-  programCohortID: yup.string().required('Program cohort is required'),
 
   questions: yup.array().of(
     yup.object().shape({
@@ -24,6 +23,5 @@ export const formForumDefaultValues: yup.InferType<typeof formForumSchema> = {
   formName: '',
   formDescription: '',
   status: false,
-  programCohortID: '',
   questions: [],
 }

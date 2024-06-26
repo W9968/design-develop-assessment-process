@@ -1,15 +1,20 @@
 import { JSX, Suspense } from 'react'
 
-import { GET } from '@/actions/fom-server-actions'
-import { FilterOptions } from '@/components/filter-options'
-import { ContentHeader } from '@/components/content-header'
-import { Linker } from '@/ui/link'
 import { LuFile, LuSlidersHorizontal } from 'react-icons/lu'
+
+import { Linker } from '@/ui/link'
 import { SearchInput } from '@/components/content-data-table-search'
 import { ServerSelect } from '@/ui/storybook/server-select'
+import { DataTable } from '@/ui/storybook/data-table'
+
+import { ContentHeader } from '@/components/content-header'
+import { GET } from '@/actions/form-server-actions'
+import { FilterOptions } from '@/components/filter-options'
+import { formColumns } from '@/app/dashboard/evaluations/data/form-datatable-header'
 
 export default async function Page({ searchParams }: { searchParams: { page: string; size: string; sort: string; dir: string; query: string; status: string } }): Promise<JSX.Element> {
   const evaluations: ForumResponseType = await GET(searchParams.query, searchParams.status, Number(searchParams.page) - 1, Number(searchParams.size), searchParams.sort, searchParams.dir)
+
   return (
     <div className='h-full min-h-full w-full'>
       <ContentHeader
@@ -52,7 +57,7 @@ export default async function Page({ searchParams }: { searchParams: { page: str
         </div>
 
         <Suspense key={searchParams.page + searchParams.size} fallback='loading...'>
-          {/*<DataTable<ForumType> data={evaluations.content}  paging={evaluations} />*/}
+          <DataTable<ForumType> data={evaluations.content} columns={formColumns} paging={evaluations} />
         </Suspense>
       </div>
     </div>

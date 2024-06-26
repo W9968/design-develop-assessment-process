@@ -1,7 +1,7 @@
 interface ForumType {
-  id: string
+  id?: string
   formName: string
-  formDescription?: string | null
+  formDescription: string
   status: boolean
   programCohortEntity: CohortType
   createdAt: Date
@@ -11,7 +11,7 @@ interface ForumType {
 interface ForumQuestionType {
   id: string
   questionName: string
-  questionHint?: string | null
+  questionHint?: string
   questionType: string
   options: string[]
   questionOrder: string

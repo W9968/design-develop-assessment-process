@@ -3,6 +3,8 @@
 import { type ChangeEvent, type JSX, useLayoutEffect, useState } from 'react'
 import { LuArrowLeftToLine, LuChevronRight, LuFileEdit, LuSave, LuX } from 'react-icons/lu'
 
+import { useRouter } from 'next/navigation'
+
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -11,13 +13,17 @@ import { Button } from '@/ui/button'
 import { Input } from '@/ui/input'
 import { TextArea } from '@/ui/textarea'
 import { Switch } from '@/ui/switch'
+import { toast } from 'sonner'
+import { DropDown } from '@/ui/dropdown'
 
 import { ContentHeader } from '@/components/content-header'
 import { formForumDefaultValues, formForumSchema } from '@/validation/form-forum-validation'
 import { GET_COHORTS } from '@/actions/evaluation-server-actions'
-import { DropDown } from '@/ui/dropdown'
+import { FIND, POST, PUT } from '@/actions/form-server-actions'
 
 export default function Page({ params, searchParams }: { params: { slug: string }; searchParams: { id: string } }): JSX.Element {
+  const { push } = useRouter()
+
   const [cohort, setCohort] = useState<string>('')
   const [cohortList, setCohortList] = useState<CohortType[]>([])
 
@@ -27,11 +33,21 @@ export default function Page({ params, searchParams }: { params: { slug: string 
     formState: { errors },
     handleSubmit,
     control,
+    reset,
     getValues,
+    setValue,
   } = useForm({
     resolver: yupResolver(formForumSchema),
     defaultValues: { ...formForumDefaultValues },
   })
+
+  useLayoutEffect(() => {
+    if (params.slug !== 'create') {
+      FIND(searchParams.id).then((data) => {
+        reset(data)
+      })
+    }
+  }, [params.slug, searchParams.id, reset])
 
   useLayoutEffect(() => {
     GET_COHORTS().then((data) => {
@@ -53,10 +69,35 @@ export default function Page({ params, searchParams }: { params: { slug: string 
               size={'large'}
               icon={<LuSave size={20} />}
               className={'gap-2 px-3'}
-              onClick={handleSubmit((data) => console.log(data))}
+              onClick={handleSubmit(
+                (data) =>
+                  POST({
+                    ...data,
+                    programCohortEntity: cohortList.find((el) => el.id === cohort)!,
+                  })
+                    .then(() => toast.success('Forum created successfully'))
+                    .then(() => push('/dashboard/evaluations'))
+                    .catch(() => toast.error("Couldn't create forum. Please try again.")),
+                (error) => toast.error("Couldn't create forum. Please try again.")
+              )}
             />
           ) : (
-            <Button key={'update-consultant-element'} variant={'secondary'} title={'Update'} size={'large'} icon={<LuFileEdit size={20} />} className={'gap-2 px-3'} />
+            <Button
+              key={'update-consultant-element'}
+              variant={'secondary'}
+              title={'Update'}
+              size={'large'}
+              icon={<LuFileEdit size={20} />}
+              className={'gap-2 px-3'}
+              onClick={handleSubmit(
+                (data) =>
+                  PUT({ ...data, programCohortEntity: cohortList.find((el) => el.id === cohort)! })
+                    .then(() => toast.success('Forum updated successfully'))
+                    .then(() => push('/dashboard/evaluations'))
+                    .catch(() => toast.error("Couldn't update forum. Please try again.")),
+                (error) => toast.error("Couldn't update forum. Please try again.")
+              )}
+            />
           ),
         ]}
       />
